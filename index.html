@@ -1,0 +1,2648 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#059669" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="BrocoFood" />
+  <meta name="application-name" content="BrocoFood" />
+  <title>BrocoFood - Tu Brócoli Chef de Despensa y Hábitos</title>
+  <link id="dynamic-favicon" rel="icon" type="image/png" href="" />
+  <link id="dynamic-apple-icon" rel="apple-touch-icon" sizes="512x512" href="" />
+  <link id="dynamic-manifest" rel="manifest" href="" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+    
+    * {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: #f3f7f4;
+      color: #1e293b;
+      overscroll-behavior-y: none;
+    }
+
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .animate-slide-up {
+      animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.98); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .animate-fade-in {
+      animation: fadeIn 0.2s ease-out forwards;
+    }
+
+    .pb-safe {
+      padding-bottom: calc(5.75rem + env(safe-area-inset-bottom));
+    }
+    .nav-safe {
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    button, input, select, textarea, label {
+      touch-action: manipulation;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- HEADER SUPERIOR CON MASCOTA BROCOFOOD -->
+  <header class="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-emerald-100 px-4 py-2.5 shadow-2xs">
+    <div class="max-w-2xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-2.5">
+        <!-- Logo SVG Cute de Brócoli Chef -->
+        <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-emerald-100 via-teal-50 to-amber-50 border border-emerald-200/80 flex items-center justify-center shadow-xs shrink-0 overflow-hidden">
+          <svg viewBox="0 0 120 120" class="w-10 h-10" xmlns="http://www.w3.org/2000/svg" aria-label="Logo BrocoFood">
+            <!-- Tronco / Cuerpo tierno -->
+            <path d="M46 66 L74 66 L78 100 C78 105 72 108 60 108 C48 108 42 105 42 100 Z" fill="#a7f3d0" stroke="#065f46" stroke-width="3.5" stroke-linejoin="round"/>
+            <!-- Copa frondosa del brócoli -->
+            <circle cx="36" cy="58" r="19" fill="#10b981" stroke="#065f46" stroke-width="3.5"/>
+            <circle cx="84" cy="58" r="19" fill="#10b981" stroke="#065f46" stroke-width="3.5"/>
+            <circle cx="60" cy="52" r="24" fill="#34d399" stroke="#065f46" stroke-width="3.5"/>
+            <circle cx="45" cy="64" r="16" fill="#34d399"/>
+            <circle cx="75" cy="64" r="16" fill="#34d399"/>
+            <!-- Gorrito de chef esponjoso -->
+            <path d="M41 34 C33 32 31 21 40 18 C43 9 56 8 60 14 C64 8 77 9 80 18 C89 21 87 32 79 34 Z" fill="#ffffff" stroke="#065f46" stroke-width="3.2" stroke-linejoin="round"/>
+            <rect x="42" y="31" width="36" height="8" rx="3" fill="#fef3c7" stroke="#065f46" stroke-width="3"/>
+            <!-- Ojitos kawaii -->
+            <circle cx="51" cy="79" r="3.5" fill="#064e3b"/>
+            <circle cx="69" cy="79" r="3.5" fill="#064e3b"/>
+            <circle cx="52.2" cy="77.8" r="1.2" fill="#ffffff"/>
+            <circle cx="70.2" cy="77.8" r="1.2" fill="#ffffff"/>
+            <!-- Mejillas rosadas -->
+            <ellipse cx="44" cy="84" rx="4" ry="2.4" fill="#fda4af"/>
+            <ellipse cx="76" cy="84" rx="4" ry="2.4" fill="#fda4af"/>
+            <!-- Sonrisa -->
+            <path d="M55 85 Q60 90 65 85" fill="none" stroke="#064e3b" stroke-width="2.8" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <h1 class="text-lg font-extrabold tracking-tight text-slate-800 leading-none">Broco<span class="text-emerald-600">Food</span></h1>
+          <p class="text-[11px] font-medium text-slate-500 mt-0.5">Despensa, menú semanal y hábitos</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <!-- Indicador rápido de racha en header -->
+        <div id="header-streak-pill" class="px-2.5 py-1.5 rounded-xl bg-amber-50 border border-amber-200/80 text-amber-700 text-xs font-extrabold flex items-center gap-1 min-h-[38px]">
+          <i class="fa-solid fa-fire text-amber-500"></i>
+          <span id="header-streak-count">0d</span>
+        </div>
+        <button onclick="openBackupModal()" class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition flex items-center gap-1.5 text-xs font-semibold min-h-[40px]" title="Respaldo de datos (iOS / Android)">
+          <i class="fa-solid fa-cloud-arrow-up text-emerald-600"></i>
+          <span class="hidden sm:inline">Respaldo</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTENEDOR PRINCIPAL -->
+  <main id="app-content" class="flex-1 max-w-2xl w-full mx-auto px-4 pt-4 pb-safe">
+    <!-- Renderizado dinámico -->
+  </main>
+
+  <!-- BARRA DE NAVEGACIÓN INFERIOR (4 PESTAÑAS) -->
+  <nav class="fixed bottom-0 inset-x-0 z-30 bg-white/95 backdrop-blur-md border-t border-slate-200 nav-safe shadow-[0_-4px_20px_rgba(0,0,0,0.04)]">
+    <div class="max-w-2xl mx-auto grid grid-cols-4 h-16">
+      <button onclick="switchTab('calendar')" id="nav-calendar" class="nav-btn flex flex-col items-center justify-center gap-1 text-emerald-600 transition relative">
+        <i class="fa-solid fa-calendar-check text-lg"></i>
+        <span class="text-[11px] font-bold">Calendario</span>
+      </button>
+
+      <button onclick="switchTab('pantry')" id="nav-pantry" class="nav-btn flex flex-col items-center justify-center gap-1 text-slate-400 hover:text-slate-600 transition relative">
+        <div class="relative">
+          <i class="fa-solid fa-box-open text-lg"></i>
+          <span id="badge-expiring" class="hidden absolute -top-1.5 -right-2.5 bg-rose-500 text-white text-[10px] font-bold px-1.5 py-0.2 rounded-full">0</span>
+        </div>
+        <span class="text-[11px] font-semibold">Despensa</span>
+      </button>
+
+      <button onclick="switchTab('recipes')" id="nav-recipes" class="nav-btn flex flex-col items-center justify-center gap-1 text-slate-400 hover:text-slate-600 transition">
+        <i class="fa-solid fa-book-open text-lg"></i>
+        <span class="text-[11px] font-semibold">Recetario</span>
+      </button>
+
+      <button onclick="switchTab('shopping')" id="nav-shopping" class="nav-btn flex flex-col items-center justify-center gap-1 text-slate-400 hover:text-slate-600 transition relative">
+        <div class="relative">
+          <i class="fa-solid fa-cart-shopping text-lg"></i>
+          <span id="badge-shopping" class="hidden absolute -top-1.5 -right-2.5 bg-amber-500 text-white text-[10px] font-bold px-1.5 py-0.2 rounded-full">0</span>
+        </div>
+        <span class="text-[11px] font-semibold">Compras</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- CONTENEDOR DE MODALES -->
+  <div id="modal-container" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-end sm:items-center justify-center p-0 sm:p-4">
+    <div id="modal-box" class="bg-white w-full max-w-lg rounded-t-3xl sm:rounded-3xl shadow-2xl max-h-[90vh] flex flex-col overflow-hidden animate-slide-up">
+      <!-- Contenido dinámico del modal -->
+    </div>
+  </div>
+
+  <!-- NOTIFICACIÓN TOAST -->
+  <div id="toast" class="fixed top-16 left-1/2 -translate-x-1/2 z-50 pointer-events-none opacity-0 transition-all duration-300 transform -translate-y-2">
+    <div class="bg-slate-800 text-white px-4 py-2.5 rounded-full shadow-lg flex items-center gap-2 text-sm font-medium whitespace-nowrap">
+      <i id="toast-icon" class="fa-solid fa-circle-check text-emerald-400"></i>
+      <span id="toast-message">Acción completada</span>
+    </div>
+  </div>
+
+  <script>
+    /**
+     * ============================================================================
+     * BROCOFOOD - PWA INTELIGENTE DE DESPENSA, RECETARIO, PRESUPUESTO Y HÁBITOS
+     * ============================================================================
+     */
+
+    const STORAGE_KEY = 'brocofood_v1_data';
+    const LEGACY_STORAGE_KEY = 'despensasmart_v2_data';
+
+    /**
+     * Genera dinámicamente un ícono PNG 512x512 del brócoli chef kawaii mediante Canvas
+     * y lo inyecta en apple-touch-icon, favicon y manifest.json para que al guardar en
+     * iPhone (Safari -> Agregar a inicio) o Android aparezca el logo tierno en vez de una letra.
+     */
+    function setupBrocoFoodPWAIcons() {
+      try {
+        const svgMarkup = `
+          <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+            <defs>
+              <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#ecfdf5"/>
+                <stop offset="55%" stop-color="#d1fae5"/>
+                <stop offset="100%" stop-color="#fef3c7"/>
+              </linearGradient>
+            </defs>
+            <rect width="512" height="512" rx="112" fill="url(#bgGrad)"/>
+            <!-- Sombra suave en el suelo -->
+            <ellipse cx="256" cy="456" rx="110" ry="18" fill="#059669" opacity="0.14"/>
+            <!-- Tronco / Cuerpo tierno del brócoli -->
+            <path d="M196 280 L316 280 L334 422 C334 444 306 456 256 456 C206 456 178 444 178 422 Z" fill="#a7f3d0" stroke="#065f46" stroke-width="14" stroke-linejoin="round"/>
+            <!-- Bracitos tiernos -->
+            <path d="M185 335 Q150 320 156 296" fill="none" stroke="#065f46" stroke-width="13" stroke-linecap="round"/>
+            <path d="M327 335 Q362 320 356 296" fill="none" stroke="#065f46" stroke-width="13" stroke-linecap="round"/>
+            <!-- Copa frondosa verde brócoli -->
+            <circle cx="154" cy="248" r="82" fill="#10b981" stroke="#065f46" stroke-width="14"/>
+            <circle cx="358" cy="248" r="82" fill="#10b981" stroke="#065f46" stroke-width="14"/>
+            <circle cx="256" cy="222" r="102" fill="#34d399" stroke="#065f46" stroke-width="14"/>
+            <circle cx="192" cy="272" r="68" fill="#34d399"/>
+            <circle cx="320" cy="272" r="68" fill="#34d399"/>
+            <!-- Detalles esponjosos en la copa -->
+            <path d="M135 225 Q154 205 173 225" fill="none" stroke="#059669" stroke-width="9" stroke-linecap="round"/>
+            <path d="M339 225 Q358 205 377 225" fill="none" stroke="#059669" stroke-width="9" stroke-linecap="round"/>
+            <path d="M235 182 Q256 162 277 182" fill="none" stroke="#10b981" stroke-width="9" stroke-linecap="round"/>
+            <!-- Gorrito de chef blanco esponjoso -->
+            <path d="M174 146 C138 136 130 88 170 76 C184 36 238 32 256 58 C274 32 328 36 342 76 C382 88 374 136 338 146 Z" fill="#ffffff" stroke="#065f46" stroke-width="13" stroke-linejoin="round"/>
+            <rect x="178" y="132" width="156" height="34" rx="12" fill="#fef3c7" stroke="#065f46" stroke-width="12"/>
+            <!-- Ojitos kawaii brillantes -->
+            <circle cx="218" cy="336" r="15" fill="#064e3b"/>
+            <circle cx="294" cy="336" r="15" fill="#064e3b"/>
+            <circle cx="223" cy="330" r="5.5" fill="#ffffff"/>
+            <circle cx="299" cy="330" r="5.5" fill="#ffffff"/>
+            <!-- Mejillas rosadas -->
+            <ellipse cx="188" cy="358" rx="18" ry="10" fill="#fda4af"/>
+            <ellipse cx="324" cy="358" rx="18" ry="10" fill="#fda4af"/>
+            <!-- Sonrisa dulce -->
+            <path d="M235 362 Q256 384 277 362" fill="none" stroke="#064e3b" stroke-width="11" stroke-linecap="round"/>
+          </svg>
+        `;
+
+        const img = new Image();
+        const svgBlob = new Blob([svgMarkup], { type: 'image/svg+xml;charset=utf-8' });
+        const url = URL.createObjectURL(svgBlob);
+
+        img.onload = function () {
+          const canvas = document.createElement('canvas');
+          canvas.width = 512;
+          canvas.height = 512;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, 512, 512);
+          URL.revokeObjectURL(url);
+
+          const pngDataUrl = canvas.toDataURL('image/png');
+
+          const appleIcon = document.getElementById('dynamic-apple-icon');
+          const favIcon = document.getElementById('dynamic-favicon');
+          if (appleIcon) appleIcon.href = pngDataUrl;
+          if (favIcon) favIcon.href = pngDataUrl;
+
+          const manifestObj = {
+            name: 'BrocoFood',
+            short_name: 'BrocoFood',
+            description: 'Tu brócoli chef para controlar despensa, recetario, presupuesto y hábitos diarios.',
+            start_url: '.',
+            display: 'standalone',
+            background_color: '#f3f7f4',
+            theme_color: '#059669',
+            icons: [
+              {
+                src: pngDataUrl,
+                sizes: '512x512',
+                type: 'image/png',
+                purpose: 'any maskable'
+              }
+            ]
+          };
+
+          const manifestLink = document.getElementById('dynamic-manifest');
+          if (manifestLink) {
+            manifestLink.href = 'data:application/manifest+json;charset=utf-8,' + encodeURIComponent(JSON.stringify(manifestObj));
+          }
+        };
+        img.src = url;
+      } catch (err) {
+        console.warn('No se pudo generar el ícono dinámico:', err);
+      }
+    }
+
+    // Utilidades de fechas locales YYYY-MM-DD
+    function getTodayStr(offsetDays = 0) {
+      const d = new Date();
+      d.setDate(d.getDate() + offsetDays);
+      const year = d.getFullYear();
+      const month = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
+
+    function addDaysToDateStr(dateStr, days) {
+      const [y, m, d] = dateStr.split('-').map(Number);
+      const date = new Date(y, m - 1, d);
+      date.setDate(date.getDate() + Number(days));
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
+
+    function getDaysRemaining(expiryDateStr, fromDateStr = getTodayStr(0)) {
+      const [y1, m1, d1] = fromDateStr.split('-').map(Number);
+      const [y2, m2, d2] = expiryDateStr.split('-').map(Number);
+      const t1 = new Date(y1, m1 - 1, d1).getTime();
+      const t2 = new Date(y2, m2 - 1, d2).getTime();
+      return Math.round((t2 - t1) / (1000 * 60 * 60 * 24));
+    }
+
+    function getDayInfo(dateStr) {
+      const [y, m, d] = dateStr.split('-').map(Number);
+      const date = new Date(y, m - 1, d);
+      const daysShort = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+      const daysFull = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+      const months = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+      const today = getTodayStr(0);
+      const tomorrow = getTodayStr(1);
+
+      let relativeLabel = `${daysFull[date.getDay()]} ${d} ${months[m - 1]}`;
+      if (dateStr === today) relativeLabel = `Hoy · ${daysFull[date.getDay()]} ${d}`;
+      else if (dateStr === tomorrow) relativeLabel = `Mañana · ${daysFull[date.getDay()]} ${d}`;
+
+      return {
+        dayShort: daysShort[date.getDay()],
+        dayFull: daysFull[date.getDay()],
+        dayNum: d,
+        monthShort: months[m - 1],
+        formatted: `${d} ${months[m - 1]}`,
+        relativeLabel
+      };
+    }
+
+    function formatNumber(num) {
+      return Number.isInteger(num) ? num.toString() : Number(num.toFixed(2)).toString();
+    }
+
+    function formatSoles(amount) {
+      const val = Number(amount) || 0;
+      return `S/ ${val.toFixed(2)}`;
+    }
+
+    // Datos iniciales realistas (Perú, precios referenciales en Soles, recetas con tiempos y procedimiento)
+    function getDefaultData() {
+      const today = getTodayStr(0);
+      return {
+        catalog: [
+          { id: 'ing_tomate', name: 'Tomate', category: 'Verduras', buyUnit: 'kg', useUnit: 'unidades', factor: 7, shelfLifeDays: 5, refPrice: 3.50 },
+          { id: 'ing_cebolla', name: 'Cebolla roja', category: 'Verduras', buyUnit: 'kg', useUnit: 'unidades', factor: 7, shelfLifeDays: 10, refPrice: 2.80 },
+          { id: 'ing_pollo', name: 'Pechuga / Presa de pollo', category: 'Carnes', buyUnit: 'kg', useUnit: 'gramos', factor: 1000, shelfLifeDays: 3, refPrice: 12.50 },
+          { id: 'ing_fideos', name: 'Fideos tallarín/canuto', category: 'Abarrotes', buyUnit: 'paquete (500g)', useUnit: 'gramos', factor: 500, shelfLifeDays: 180, refPrice: 2.40 },
+          { id: 'ing_arroz', name: 'Arroz extra', category: 'Abarrotes', buyUnit: 'kg', useUnit: 'tazas', factor: 5, shelfLifeDays: 180, refPrice: 4.50 },
+          { id: 'ing_queso', name: 'Queso fresco', category: 'Lácteos', buyUnit: 'molde (500g)', useUnit: 'gramos', factor: 500, shelfLifeDays: 6, refPrice: 11.00 },
+          { id: 'ing_papa', name: 'Papa amarilla/blanca', category: 'Verduras', buyUnit: 'kg', useUnit: 'unidades', factor: 6, shelfLifeDays: 14, refPrice: 3.00 },
+          { id: 'ing_huevo', name: 'Huevos pardos', category: 'Lácteos', buyUnit: 'kg (15 unid)', useUnit: 'unidades', factor: 15, shelfLifeDays: 15, refPrice: 9.50 },
+          { id: 'ing_espinaca', name: 'Espinaca y culantro', category: 'Verduras', buyUnit: 'atado', useUnit: 'porciones', factor: 2, shelfLifeDays: 4, refPrice: 2.50 }
+        ],
+        pantry: [
+          // Tomates comprados hace 4 días (quedan 4 unidades, vencen MAÑANA -> alerta roja/amarilla para Modo Cero Flojera)
+          {
+            id: 'lot_1',
+            ingredientId: 'ing_tomate',
+            buyQty: 1,
+            remainingUseQty: 4,
+            initialUseQty: 7,
+            purchaseDate: getTodayStr(-4),
+            expiryDate: getTodayStr(1)
+          },
+          // Pollo fresco (400g, vence en 2 días -> alerta amarilla)
+          {
+            id: 'lot_2',
+            ingredientId: 'ing_pollo',
+            buyQty: 0.4,
+            remainingUseQty: 400,
+            initialUseQty: 400,
+            purchaseDate: getTodayStr(-1),
+            expiryDate: getTodayStr(2)
+          },
+          // Cebolla (6 unidades)
+          {
+            id: 'lot_3',
+            ingredientId: 'ing_cebolla',
+            buyQty: 1,
+            remainingUseQty: 6,
+            initialUseQty: 7,
+            purchaseDate: getTodayStr(-1),
+            expiryDate: getTodayStr(9)
+          },
+          // Fideos (500g)
+          {
+            id: 'lot_4',
+            ingredientId: 'ing_fideos',
+            buyQty: 1,
+            remainingUseQty: 500,
+            initialUseQty: 500,
+            purchaseDate: getTodayStr(-4),
+            expiryDate: getTodayStr(176)
+          },
+          // Arroz (5 tazas)
+          {
+            id: 'lot_5',
+            ingredientId: 'ing_arroz',
+            buyQty: 1,
+            remainingUseQty: 5,
+            initialUseQty: 5,
+            purchaseDate: getTodayStr(-5),
+            expiryDate: getTodayStr(175)
+          },
+          // Huevos (6 unidades)
+          {
+            id: 'lot_6',
+            ingredientId: 'ing_huevo',
+            buyQty: 0.4,
+            remainingUseQty: 6,
+            initialUseQty: 6,
+            purchaseDate: getTodayStr(-2),
+            expiryDate: getTodayStr(13)
+          }
+        ],
+        recipes: [
+          {
+            id: 'rec_fideos',
+            name: 'Segundo de fideos con pollo',
+            servings: 2,
+            prepTimeMin: 30,
+            notes: 'Clásico aderezo rojo peruanazo. Ideal para salvar tomates.',
+            instructions: '1. Pica la cebolla en cuadritos y licúa o ralla los tomates.\n2. En una olla con un chorrito de aceite, dora las presas de pollo salpimentadas por 4 min y retira.\n3. En el mismo aceite sofríe la cebolla 5 min, agrega ajo, sal al gusto (1/2 cdta) y el tomate. Cocina a fuego medio por 8 min hasta que corte.\n4. Regresa el pollo, echa 1 taza de agua y deja hervir 12 min.\n5. Aparte sancocha los fideos (8-10 min), escúrrelos y mézclalos con el jugo.',
+            ingredients: [
+              { ingredientId: 'ing_tomate', qty: 3 },
+              { ingredientId: 'ing_cebolla', qty: 1 },
+              { ingredientId: 'ing_pollo', qty: 300 },
+              { ingredientId: 'ing_fideos', qty: 250 }
+            ]
+          },
+          {
+            id: 'rec_tortilla',
+            name: 'Tortilla rápida de verduras y pollo',
+            servings: 1,
+            prepTimeMin: 15,
+            notes: 'Súper rápida cuando no quieres lavar muchas ollas.',
+            instructions: '1. Corta el pollo en trocitos pequeños, salpimienta y saltéalo en sartén 6 minutos hasta dorar.\n2. Pica el tomate en cubitos (sin mucha pepa) y la cebolla en pluma delgada.\n3. Bate 3 huevos en un bowl con una pizca de sal, mezcla todo dentro y vierte en la sartén a fuego bajo tapado por 4 minutos por lado.',
+            ingredients: [
+              { ingredientId: 'ing_huevo', qty: 3 },
+              { ingredientId: 'ing_tomate', qty: 1 },
+              { ingredientId: 'ing_cebolla', qty: 1 },
+              { ingredientId: 'ing_pollo', qty: 100 }
+            ]
+          },
+          {
+            id: 'rec_arroz_pollo',
+            name: 'Arroz con pollo rápido',
+            servings: 2,
+            prepTimeMin: 35,
+            notes: 'Con bastante culantro y espinaca licuada.',
+            instructions: '1. Licúa la espinaca y el culantro con 1/2 taza de agua.\n2. Dora el pollo salpimentado 5 min y reserva.\n3. Haz un aderezo con cebolla picada (5 min), ajo y ají amarillo; añade lo licuado y deja cocinar 4 min.\n4. Agrega 2 tazas de arroz lavado, 2 tazas de agua, sal al gusto y el pollo. Tapa y cocina a fuego mínimo por 18 minutos sin destapar.',
+            ingredients: [
+              { ingredientId: 'ing_arroz', qty: 2 },
+              { ingredientId: 'ing_pollo', qty: 350 },
+              { ingredientId: 'ing_espinaca', qty: 1 },
+              { ingredientId: 'ing_cebolla', qty: 1 }
+            ]
+          }
+        ],
+        schedule: [
+          { id: 'sch_1', date: getTodayStr(1), mealType: 'Almuerzo', recipeId: 'rec_arroz_pollo', status: 'planned' },
+          { id: 'sch_2', date: getTodayStr(3), mealType: 'Almuerzo', recipeId: 'rec_fideos', status: 'planned' }
+        ],
+        noCookDays: {
+          [getTodayStr(2)]: true
+        },
+        habitLogs: {
+          [getTodayStr(-6)]: { cooked: true, meals: ['Segundo de fideos con pollo'], type: 'recipe' },
+          [getTodayStr(-5)]: { cooked: true, meals: ['Tortilla rápida de verduras'], type: 'recipe' },
+          [getTodayStr(-4)]: { cooked: false, meals: [] },
+          [getTodayStr(-3)]: { cooked: true, meals: ['Arroz con pollo rápido'], type: 'recipe' },
+          [getTodayStr(-2)]: { cooked: false, meals: [] },
+          [getTodayStr(-1)]: { cooked: true, meals: ['Pan con huevo (comida rápida)'], type: 'quick' }
+        },
+        checkedShoppingItems: {},
+        // Extras del hogar (compras sin receta: papel higiénico, detergente, aceite, etc.)
+        extraShoppingItems: [
+          { id: 'ext_1', name: 'Aceite vegetal (1L)', qtyLabel: '1 botella', estimatedPrice: 8.50, checked: false },
+          { id: 'ext_2', name: 'Papel higiénico (paq. x4)', qtyLabel: '1 paquete', estimatedPrice: 7.00, checked: false }
+        ]
+      };
+    }
+
+    // Carga y migración de datos desde localStorage
+    function loadState() {
+      try {
+        let raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) {
+          const legacyRaw = localStorage.getItem(LEGACY_STORAGE_KEY);
+          if (legacyRaw) {
+            const migrated = JSON.parse(legacyRaw);
+            migrated.catalog = (migrated.catalog || []).map(c => ({ refPrice: 0, ...c }));
+            migrated.recipes = (migrated.recipes || []).map(r => ({ prepTimeMin: 25, instructions: r.notes || '', ...r }));
+            migrated.extraShoppingItems = migrated.extraShoppingItems || [];
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(migrated));
+            return migrated;
+          }
+          const def = getDefaultData();
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(def));
+          return def;
+        }
+        const parsed = JSON.parse(raw);
+        // Asegurar compatibilidad con nuevos campos
+        parsed.catalog = (parsed.catalog || []).map(c => ({ refPrice: 0, ...c }));
+        parsed.recipes = (parsed.recipes || []).map(r => ({ prepTimeMin: 25, instructions: '', ...r }));
+        parsed.extraShoppingItems = parsed.extraShoppingItems || [];
+        parsed.habitLogs = parsed.habitLogs || {};
+        parsed.schedule = parsed.schedule || [];
+        parsed.noCookDays = parsed.noCookDays || {};
+        parsed.checkedShoppingItems = parsed.checkedShoppingItems || {};
+        return parsed;
+      } catch (e) {
+        return getDefaultData();
+      }
+    }
+
+    let appState = loadState();
+    let currentTab = 'calendar';
+    let selectedCalendarDate = getTodayStr(0);
+    let pantryFilter = 'all'; // 'all' | 'expiring'
+    let recipesSubTab = 'recipes'; // 'recipes' | 'catalog'
+    let catalogSearch = '';
+
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
+        updateGlobalIndicators();
+      } catch (e) {
+        showToast('Error al guardar en el dispositivo', 'error');
+      }
+    }
+
+    function getIngredient(id) {
+      return appState.catalog.find(i => i.id === id);
+    }
+
+    function getRecipe(id) {
+      return appState.recipes.find(r => r.id === id);
+    }
+
+    function getTotalStockForIngredient(ingredientId) {
+      const today = getTodayStr(0);
+      return appState.pantry
+        .filter(lot => lot.ingredientId === ingredientId && lot.remainingUseQty > 0 && lot.expiryDate >= today)
+        .reduce((sum, lot) => sum + Number(lot.remainingUseQty), 0);
+    }
+
+    function getCategoryIcon(category) {
+      const map = {
+        'Verduras': { icon: 'fa-carrot', color: 'text-emerald-600 bg-emerald-50' },
+        'Carnes': { icon: 'fa-drumstick-bite', color: 'text-rose-600 bg-rose-50' },
+        'Abarrotes': { icon: 'fa-wheat-awn', color: 'text-amber-600 bg-amber-50' },
+        'Lácteos': { icon: 'fa-cheese', color: 'text-sky-600 bg-sky-50' },
+        'Otros': { icon: 'fa-box', color: 'text-slate-600 bg-slate-100' }
+      };
+      return map[category] || map['Otros'];
+    }
+
+    // Toast
+    let toastTimeout;
+    function showToast(message, type = 'success') {
+      const toast = document.getElementById('toast');
+      const icon = document.getElementById('toast-icon');
+      const msg = document.getElementById('toast-message');
+
+      msg.textContent = message;
+      if (type === 'error') icon.className = 'fa-solid fa-circle-exclamation text-rose-400';
+      else if (type === 'warning') icon.className = 'fa-solid fa-triangle-exclamation text-amber-400';
+      else icon.className = 'fa-solid fa-circle-check text-emerald-400';
+
+      toast.classList.remove('opacity-0', '-translate-y-2');
+      toast.classList.add('opacity-100', 'translate-y-0');
+
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove('opacity-100', 'translate-y-0');
+        toast.classList.add('opacity-0', '-translate-y-2');
+      }, 2800);
+    }
+
+    // Navegación principal
+    function switchTab(tab) {
+      currentTab = tab;
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.remove('text-emerald-600');
+        btn.classList.add('text-slate-400');
+        btn.querySelector('span:last-child').classList.replace('font-bold', 'font-semibold');
+      });
+      const activeBtn = document.getElementById(`nav-${tab}`);
+      if (activeBtn) {
+        activeBtn.classList.remove('text-slate-400');
+        activeBtn.classList.add('text-emerald-600');
+        activeBtn.querySelector('span:last-child').classList.replace('font-semibold', 'font-bold');
+      }
+      renderCurrentTab();
+    }
+
+    // Cálculo de racha de días comiendo/cocinando
+    function calculateCookingStreak() {
+      const today = getTodayStr(0);
+      let streak = 0;
+      let checkOffset = (appState.habitLogs[today] && appState.habitLogs[today].cooked) ? 0 : -1;
+
+      while (true) {
+        const dStr = getTodayStr(checkOffset);
+        if (appState.habitLogs[dStr] && appState.habitLogs[dStr].cooked) {
+          streak++;
+          checkOffset--;
+        } else {
+          break;
+        }
+      }
+      return streak;
+    }
+
+    function updateGlobalIndicators() {
+      const streak = calculateCookingStreak();
+      document.getElementById('header-streak-count').textContent = `${streak}d`;
+
+      const urgentCount = appState.pantry.filter(lot => lot.remainingUseQty > 0 && getDaysRemaining(lot.expiryDate) <= 2).length;
+      const badgeExp = document.getElementById('badge-expiring');
+      if (urgentCount > 0) {
+        badgeExp.textContent = urgentCount;
+        badgeExp.classList.remove('hidden');
+      } else {
+        badgeExp.classList.add('hidden');
+      }
+
+      const { missingList } = calculateWeeklyShoppingBalance();
+      const pendingRecipeItems = missingList.filter(i => !appState.checkedShoppingItems[i.ingredient.id]).length;
+      const pendingExtras = (appState.extraShoppingItems || []).filter(e => !e.checked).length;
+      const totalPending = pendingRecipeItems + pendingExtras;
+
+      const badgeShop = document.getElementById('badge-shopping');
+      if (totalPending > 0) {
+        badgeShop.textContent = totalPending;
+        badgeShop.classList.remove('hidden');
+      } else {
+        badgeShop.classList.add('hidden');
+      }
+    }
+
+    function renderCurrentTab() {
+      updateGlobalIndicators();
+      const container = document.getElementById('app-content');
+      if (currentTab === 'calendar') renderCalendarTab(container);
+      else if (currentTab === 'pantry') renderPantryTab(container);
+      else if (currentTab === 'recipes') renderRecipesAndCatalogTab(container);
+      else if (currentTab === 'shopping') renderShoppingTab(container);
+    }
+
+    /**
+     * ============================================================================
+     * MODO "CERO FLOJERA": MOTOR DE SUGERENCIA INTELIGENTE DE RECETAS
+     * ============================================================================
+     * Analiza lotes en rojo (<= 1 día) y amarillo (<= 3 días) y busca qué receta
+     * del usuario los aprovecha mejor teniendo todos los ingredientes completos.
+     */
+    function getZeroLazinessSuggestion() {
+      const today = getTodayStr(0);
+
+      // Detectar ingredientes urgentes (0 a 3 días de vida restante)
+      const urgentLots = appState.pantry
+        .filter(l => l.remainingUseQty > 0 && l.expiryDate >= today)
+        .map(l => ({
+          ...l,
+          ingredient: getIngredient(l.ingredientId),
+          daysLeft: getDaysRemaining(l.expiryDate)
+        }))
+        .filter(l => l.ingredient && l.daysLeft <= 3)
+        .sort((a, b) => a.daysLeft - b.daysLeft);
+
+      const urgentIngredientIds = new Set(urgentLots.map(l => l.ingredientId));
+
+      if (appState.recipes.length === 0) return null;
+
+      // Evaluar cada receta del catálogo
+      const scoredRecipes = appState.recipes.map(recipe => {
+        let hasAllIngredients = true;
+        const missingNames = [];
+        const savedUrgentNames = [];
+        let urgencyScore = 0;
+
+        recipe.ingredients.forEach(req => {
+          const ing = getIngredient(req.ingredientId);
+          if (!ing) return;
+          const stock = getTotalStockForIngredient(ing.id);
+          if (stock < req.qty) {
+            hasAllIngredients = false;
+            missingNames.push(ing.name);
+          }
+          if (urgentIngredientIds.has(ing.id)) {
+            const minDays = Math.min(...urgentLots.filter(l => l.ingredientId === ing.id).map(l => l.daysLeft));
+            // Más puntaje si vence hoy (0d) o mañana (1d)
+            urgencyScore += (4 - minDays) * 10;
+            if (!savedUrgentNames.includes(ing.name)) {
+              savedUrgentNames.push(`${ing.name} (${minDays === 0 ? 'vence hoy' : minDays === 1 ? 'vence mañana' : `vence en ${minDays}d`})`);
+            }
+          }
+        });
+
+        // Bonus por recetas rápidas (<= 25 min) para días de flojera
+        const speedBonus = (recipe.prepTimeMin && recipe.prepTimeMin <= 25) ? 5 : 0;
+
+        return {
+          recipe,
+          hasAllIngredients,
+          missingNames,
+          savedUrgentNames,
+          urgencyScore,
+          totalScore: (hasAllIngredients ? 100 : 0) + urgencyScore + speedBonus
+        };
+      });
+
+      // Ordenar priorizando las 100% completas que salvan ingredientes urgentes
+      scoredRecipes.sort((a, b) => b.totalScore - a.totalScore);
+      const best = scoredRecipes[0];
+      if (!best) return null;
+
+      return {
+        best,
+        allCandidates: scoredRecipes.filter(s => s.hasAllIngredients || s.urgencyScore > 0),
+        urgentLots
+      };
+    }
+
+    function openZeroLazinessModal() {
+      const analysis = getZeroLazinessSuggestion();
+      const today = getTodayStr(0);
+
+      if (!analysis || appState.recipes.length === 0) {
+        showToast('Agrega al menos una receta en tu Recetario primero', 'warning');
+        switchTab('recipes');
+        return;
+      }
+
+      const { best, allCandidates, urgentLots } = analysis;
+
+      const modalBox = document.getElementById('modal-box');
+      modalBox.innerHTML = `
+        <div class="p-5 border-b border-slate-100 flex items-center justify-between bg-gradient-to-r from-emerald-50 to-amber-50/60">
+          <div class="flex items-center gap-2.5">
+            <div class="w-10 h-10 rounded-2xl bg-emerald-600 text-white flex items-center justify-center text-lg shadow-xs">
+              🥦
+            </div>
+            <div>
+              <h3 class="text-base font-extrabold text-slate-800">Modo Cero Flojera</h3>
+              <p class="text-xs text-slate-500">Aprovecha lo que vence pronto sin salir de casa</p>
+            </div>
+          </div>
+          <button onclick="closeModal()" class="w-9 h-9 rounded-full bg-white text-slate-500 flex items-center justify-center shadow-2xs"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+
+        <div class="p-5 space-y-4 overflow-y-auto">
+          ${urgentLots.length > 0 ? `
+            <div class="bg-amber-50 border border-amber-200 rounded-2xl p-3">
+              <div class="text-[11px] font-extrabold text-amber-800 uppercase mb-1 flex items-center gap-1.5">
+                <i class="fa-solid fa-clock text-amber-600"></i>
+                <span>Ingredientes en alerta en tu despensa:</span>
+              </div>
+              <div class="flex flex-wrap gap-1.5">
+                ${urgentLots.map(l => `
+                  <span class="px-2.5 py-1 rounded-lg text-xs font-bold ${l.daysLeft <= 1 ? 'bg-rose-100 text-rose-700' : 'bg-amber-100 text-amber-800'}">
+                    ${l.ingredient.name} (${l.daysLeft === 0 ? 'hoy' : l.daysLeft === 1 ? 'mañana' : l.daysLeft + 'd'})
+                  </span>
+                `).join('')}
+              </div>
+            </div>
+          ` : `
+            <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-3 text-xs text-emerald-800 font-medium">
+              <i class="fa-solid fa-leaf text-emerald-600 mr-1"></i> ¡Todo en tu despensa está fresco! Aquí tienes la mejor opción con lo que ya tienes completo:
+            </div>
+          `}
+
+          <!-- Tarjeta de la mejor sugerencia -->
+          <div class="bg-white border-2 ${best.hasAllIngredients ? 'border-emerald-500' : 'border-amber-400'} rounded-2xl p-4 shadow-sm space-y-3">
+            <div class="flex items-start justify-between gap-2">
+              <div>
+                <span class="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase ${best.hasAllIngredients ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">
+                  ${best.hasAllIngredients ? '✨ 100% Listo en casa (No salgas)' : '⚠️ Opción más cercana'}
+                </span>
+                <h4 class="text-lg font-extrabold text-slate-800 mt-1">${best.recipe.name}</h4>
+                <div class="flex items-center gap-3 text-xs text-slate-500 mt-0.5">
+                  <span><i class="fa-regular fa-clock text-emerald-600 mr-1"></i>${best.recipe.prepTimeMin || 25} min</span>
+                  <span><i class="fa-solid fa-bowl-food text-emerald-600 mr-1"></i>${best.recipe.servings} porc.</span>
+                </div>
+              </div>
+            </div>
+
+            ${best.savedUrgentNames.length > 0 ? `
+              <div class="text-xs bg-emerald-50 text-emerald-800 px-3 py-2 rounded-xl font-semibold">
+                <i class="fa-solid fa-shield-heart text-emerald-600 mr-1"></i>
+                Salvas: <strong>${best.savedUrgentNames.join(', ')}</strong>
+              </div>
+            ` : ''}
+
+            ${!best.hasAllIngredients ? `
+              <div class="text-xs bg-rose-50 text-rose-700 px-3 py-2 rounded-xl font-semibold">
+                Te falta comprar solo: <strong>${best.missingNames.join(', ')}</strong>
+              </div>
+            ` : ''}
+
+            <div class="grid grid-cols-2 gap-2 pt-1">
+              <button onclick="openRecipeDetailsModal('${best.recipe.id}')" class="py-3 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold flex items-center justify-center gap-1.5">
+                <i class="fa-solid fa-list-ol"></i>
+                <span>Ver pasos</span>
+              </button>
+              <button onclick="cookZeroLazinessNow('${best.recipe.id}')" class="py-3 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-extrabold flex items-center justify-center gap-1.5 shadow-sm">
+                <i class="fa-solid fa-fire-burner"></i>
+                <span>¡Cocinar esto hoy!</span>
+              </button>
+            </div>
+          </div>
+
+          ${allCandidates.length > 1 ? `
+            <div class="space-y-2">
+              <div class="text-xs font-bold text-slate-500 uppercase">Otras alternativas posibles:</div>
+              ${allCandidates.slice(1, 3).map(alt => `
+                <div class="p-3 rounded-xl border border-slate-200 flex items-center justify-between gap-2 bg-slate-50/70">
+                  <div>
+                    <div class="text-xs font-extrabold text-slate-800">${alt.recipe.name}</div>
+                    <div class="text-[11px] text-slate-500">
+                      ${alt.prepTimeMin || alt.recipe.prepTimeMin || 25} min · ${alt.hasAllIngredients ? '<span class="text-emerald-600 font-bold">Todo en casa</span>' : `Falta ${alt.missingNames.join(', ')}`}
+                    </div>
+                  </div>
+                  <button onclick="cookZeroLazinessNow('${alt.recipe.id}')" class="px-3 py-2 rounded-xl bg-emerald-600 text-white text-xs font-bold shrink-0">
+                    Elegir
+                  </button>
+                </div>
+              `).join('')}
+            </div>
+          ` : ''}
+        </div>
+      `;
+      openModal();
+    }
+
+    // Agenda la receta sugerida hoy y la marca como cocinada descontando stock y sumando hábito
+    function cookZeroLazinessNow(recipeId) {
+      const today = getTodayStr(0);
+      const recipe = getRecipe(recipeId);
+      if (!recipe) return;
+
+      if (appState.noCookDays[today]) delete appState.noCookDays[today];
+
+      const newSchId = 'sch_' + Date.now();
+      appState.schedule.push({
+        id: newSchId,
+        date: today,
+        mealType: 'Almuerzo',
+        recipeId,
+        status: 'planned'
+      });
+
+      selectedCalendarDate = today;
+      closeModal();
+      completeScheduledMeal(newSchId);
+    }
+
+    /**
+     * ============================================================================
+     * SIMULACIÓN CRONOLÓGICA DE STOCK POR DÍA EN EL CALENDARIO
+     * ============================================================================
+     */
+    function simulateScheduleStock() {
+      const today = getTodayStr(0);
+      const endWindow = getTodayStr(6);
+
+      const simLots = appState.pantry
+        .filter(l => l.remainingUseQty > 0)
+        .map(l => ({ ...l }))
+        .sort((a, b) => a.expiryDate.localeCompare(b.expiryDate));
+
+      const mealOrder = { 'Desayuno': 1, 'Almuerzo': 2, 'Cena': 3 };
+
+      const upcomingMeals = appState.schedule
+        .filter(s => s.status === 'planned' && s.date >= today && s.date <= endWindow)
+        .sort((a, b) => {
+          if (a.date !== b.date) return a.date.localeCompare(b.date);
+          return (mealOrder[a.mealType] || 2) - (mealOrder[b.mealType] || 2);
+        });
+
+      const evaluationMap = {};
+
+      upcomingMeals.forEach(item => {
+        const recipe = getRecipe(item.recipeId);
+        if (!recipe) {
+          evaluationMap[item.id] = { ok: true, alerts: [] };
+          return;
+        }
+
+        const alerts = [];
+
+        recipe.ingredients.forEach(req => {
+          const ing = getIngredient(req.ingredientId);
+          if (!ing) return;
+
+          let needed = req.qty;
+          let expiredBeforeDate = false;
+
+          const matchingLots = simLots.filter(l => l.ingredientId === req.ingredientId && l.remainingUseQty > 0);
+
+          for (const lot of matchingLots) {
+            if (needed <= 0) break;
+            if (lot.expiryDate < item.date) {
+              expiredBeforeDate = true;
+              continue;
+            }
+            const take = Math.min(lot.remainingUseQty, needed);
+            lot.remainingUseQty = Number((lot.remainingUseQty - take).toFixed(2));
+            needed = Number((needed - take).toFixed(2));
+          }
+
+          if (needed > 0) {
+            if (expiredBeforeDate) {
+              alerts.push(`${ing.name} vence antes (${formatNumber(needed)} ${ing.useUnit} sin cubrir)`);
+            } else {
+              alerts.push(`Faltan ${formatNumber(needed)} ${ing.useUnit} de ${ing.name}`);
+            }
+          }
+        });
+
+        evaluationMap[item.id] = {
+          ok: alerts.length === 0,
+          alerts
+        };
+      });
+
+      return evaluationMap;
+    }
+
+    /**
+     * ============================================================================
+     * PESTAÑA 1: CALENDARIO SEMANAL, MODO CERO FLOJERA Y HABIT TRACKER
+     * ============================================================================
+     */
+    function renderCalendarTab(container) {
+      const today = getTodayStr(0);
+      const streak = calculateCookingStreak();
+      const todayLog = appState.habitLogs[today];
+      const todayLogged = !!(todayLog && todayLog.cooked);
+      const stockEval = simulateScheduleStock();
+      const zeroLaziness = getZeroLazinessSuggestion();
+
+      // Últimos 7 días (de hace 6 días hasta hoy)
+      const past7Days = [];
+      let completedLast7 = 0;
+      for (let i = -6; i <= 0; i++) {
+        const dStr = getTodayStr(i);
+        const info = getDayInfo(dStr);
+        const log = appState.habitLogs[dStr];
+        const isDone = !!(log && log.cooked);
+        if (isDone) completedLast7++;
+        past7Days.push({ date: dStr, info, isDone, isToday: i === 0, meals: log ? log.meals : [] });
+      }
+
+      // Próximos 7 días
+      const next7Days = [];
+      for (let i = 0; i <= 6; i++) {
+        const dStr = getTodayStr(i);
+        const info = getDayInfo(dStr);
+        const dayMeals = appState.schedule.filter(s => s.date === dStr);
+        const isNoCook = !!appState.noCookDays[dStr];
+        const hasIssues = dayMeals.some(m => m.status === 'planned' && stockEval[m.id] && !stockEval[m.id].ok);
+        next7Days.push({ date: dStr, info, dayMeals, isNoCook, hasIssues, isToday: i === 0 });
+      }
+
+      const selInfo = getDayInfo(selectedCalendarDate);
+      const selMeals = appState.schedule
+        .filter(s => s.date === selectedCalendarDate)
+        .sort((a, b) => {
+          const order = { 'Desayuno': 1, 'Almuerzo': 2, 'Cena': 3 };
+          return (order[a.mealType] || 2) - (order[b.mealType] || 2);
+        });
+      const selIsNoCook = !!appState.noCookDays[selectedCalendarDate];
+
+      container.innerHTML = `
+        <div class="space-y-4 animate-fade-in">
+
+          <!-- 0. BANNER DESTACADO: MODO CERO FLOJERA -->
+          <button onclick="openZeroLazinessModal()" class="w-full text-left bg-gradient-to-r from-emerald-600 via-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 active:scale-[0.99] text-white rounded-3xl p-4 shadow-md shadow-emerald-600/15 transition flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+              <div class="w-11 h-11 rounded-2xl bg-white/15 backdrop-blur-xs flex items-center justify-center text-2xl shrink-0">
+                🥦
+              </div>
+              <div>
+                <div class="flex items-center gap-1.5">
+                  <span class="text-[10px] font-extrabold uppercase tracking-wider bg-amber-300 text-amber-950 px-2 py-0.5 rounded-full">Modo Cero Flojera</span>
+                </div>
+                <h2 class="text-sm font-extrabold mt-1 leading-snug">¿Qué cocino hoy con lo que urge usar?</h2>
+                <p class="text-[11px] text-emerald-100 mt-0.5 truncate max-w-[230px] sm:max-w-xs">
+                  ${zeroLaziness && zeroLaziness.best
+                    ? `Sugerencia: ${zeroLaziness.best.recipe.name} (${zeroLaziness.best.recipe.prepTimeMin || 25} min)`
+                    : 'Toca aquí para ver tu plato ideal sin salir a comprar'}
+                </p>
+              </div>
+            </div>
+            <div class="w-9 h-9 rounded-xl bg-white/15 flex items-center justify-center shrink-0">
+              <i class="fa-solid fa-wand-magic-sparkles text-amber-200"></i>
+            </div>
+          </button>
+          
+          <!-- 1. HABIT TRACKER DE ALIMENTACIÓN (HISTORIAL Y RACHA) -->
+          <div class="bg-white rounded-3xl p-4 border border-slate-200/80 shadow-2xs space-y-3.5">
+            <div class="flex items-center justify-between gap-2">
+              <div class="flex items-center gap-3">
+                <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 text-white flex items-center justify-center shadow-sm shrink-0">
+                  <i class="fa-solid fa-fire text-xl"></i>
+                </div>
+                <div>
+                  <div class="flex items-center gap-2">
+                    <h2 class="text-base font-extrabold text-slate-800">Racha: ${streak} ${streak === 1 ? 'día' : 'días'}</h2>
+                    <span class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">${completedLast7}/7 últimos días</span>
+                  </div>
+                  <p class="text-xs text-slate-500">Mantén tu constancia diaria sin saltarte comidas</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Barra visual de los últimos 7 días -->
+            <div class="grid grid-cols-7 gap-1.5 pt-1">
+              ${past7Days.map(d => {
+                let circleClass = 'bg-rose-50 border-rose-200 text-rose-500';
+                let iconHtml = '<i class="fa-solid fa-xmark text-xs"></i>';
+                let titleText = 'Sin comida registrada';
+
+                if (d.isDone) {
+                  circleClass = 'bg-emerald-500 border-emerald-500 text-white shadow-xs';
+                  iconHtml = '<i class="fa-solid fa-check text-xs"></i>';
+                  titleText = d.meals.length ? d.meals.join(', ') : 'Comida cumplida';
+                } else if (d.isToday) {
+                  circleClass = 'bg-amber-50 border-amber-300 text-amber-600 border-dashed';
+                  iconHtml = '<i class="fa-solid fa-clock text-xs"></i>';
+                  titleText = 'Pendiente hoy';
+                }
+
+                return `
+                  <button onclick="openPastHabitModal('${d.date}')" class="flex flex-col items-center gap-1 group min-h-[44px]" title="${titleText}">
+                    <span class="text-[10px] font-bold ${d.isToday ? 'text-emerald-600' : 'text-slate-400'}">${d.info.dayShort}</span>
+                    <div class="w-9 h-9 rounded-xl border ${circleClass} flex items-center justify-center transition group-active:scale-95">
+                      ${iconHtml}
+                    </div>
+                    <span class="text-[10px] font-semibold text-slate-500">${d.info.dayNum}</span>
+                  </button>
+                `;
+              }).join('')}
+            </div>
+
+            <!-- Acciones rápidas de hábito para HOY (incluye Comida rápida / Comí fuera) -->
+            <div class="pt-1 space-y-2">
+              ${todayLogged ? `
+                <div class="w-full py-2.5 px-3 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold flex items-center justify-between gap-2">
+                  <div class="flex items-center gap-2 truncate">
+                    <i class="fa-solid fa-circle-check text-emerald-600 text-sm shrink-0"></i>
+                    <span class="truncate">Hoy cumplido: ${todayLog.meals && todayLog.meals.length ? todayLog.meals.join(', ') : 'Registrado'}</span>
+                  </div>
+                  <button onclick="openQuickMealModal('${today}')" class="text-[11px] px-2 py-1 rounded-lg bg-emerald-100 text-emerald-800 font-extrabold shrink-0">+ Añadir otro</button>
+                </div>
+              ` : `
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  <button onclick="openQuickMealModal('${today}')" class="w-full py-3 px-3 rounded-2xl bg-amber-50 hover:bg-amber-100 border border-amber-200/90 text-amber-900 text-xs font-extrabold flex items-center justify-center gap-1.5 transition min-h-[44px]">
+                    <span>🥪</span>
+                    <span>Comí rápido / Fuera</span>
+                  </button>
+                  <button onclick="toggleManualHabitDay('${today}')" class="w-full py-3 px-3 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold flex items-center justify-center gap-1.5 transition shadow-xs min-h-[44px]">
+                    <i class="fa-solid fa-utensils text-emerald-400"></i>
+                    <span>Cociné en casa hoy</span>
+                  </button>
+                </div>
+              `}
+            </div>
+          </div>
+
+          <!-- 2. PLANIFICADOR SEMANAL (HOY + PRÓXIMOS 7 DÍAS) -->
+          <div class="space-y-3">
+            <div class="flex items-center justify-between px-1">
+              <h3 class="text-sm font-extrabold text-slate-800 uppercase tracking-wide">Planificador de la Semana</h3>
+              <span class="text-xs font-medium text-slate-500">Toca un día para ver o agendar</span>
+            </div>
+
+            <div class="grid grid-cols-7 gap-1.5">
+              ${next7Days.map(d => {
+                const isSelected = d.date === selectedCalendarDate;
+                const hasCooked = d.dayMeals.some(m => m.status === 'cooked');
+                const hasPlanned = d.dayMeals.some(m => m.status === 'planned');
+
+                let dotColor = 'bg-transparent';
+                if (d.hasIssues) dotColor = 'bg-rose-500';
+                else if (hasCooked) dotColor = 'bg-emerald-500';
+                else if (hasPlanned) dotColor = 'bg-amber-400';
+                else if (d.isNoCook) dotColor = 'bg-slate-400';
+
+                return `
+                  <button onclick="selectCalendarDate('${d.date}')" class="py-2.5 px-1 rounded-2xl border flex flex-col items-center justify-center gap-1 transition min-h-[56px] ${
+                    isSelected
+                      ? 'bg-emerald-600 border-emerald-600 text-white shadow-md shadow-emerald-600/20'
+                      : 'bg-white border-slate-200/80 text-slate-700 hover:border-emerald-300'
+                  }">
+                    <span class="text-[10px] font-bold uppercase ${isSelected ? 'text-emerald-100' : 'text-slate-400'}">${d.isToday ? 'Hoy' : d.info.dayShort}</span>
+                    <span class="text-sm font-extrabold">${d.info.dayNum}</span>
+                    <span class="w-1.5 h-1.5 rounded-full ${isSelected ? 'bg-white' : dotColor}"></span>
+                  </button>
+                `;
+              }).join('')}
+            </div>
+
+            <!-- Detalle del Día Seleccionado -->
+            <div class="bg-white rounded-3xl p-4 border border-slate-200/80 shadow-2xs space-y-3.5">
+              <div class="flex items-center justify-between gap-2 border-b border-slate-100 pb-3 flex-wrap">
+                <div>
+                  <h4 class="text-base font-extrabold text-slate-800">${selInfo.relativeLabel}</h4>
+                  <p class="text-xs text-slate-500">
+                    ${selIsNoCook ? 'Marcado como día libre de cocina' : `${selMeals.length} ${selMeals.length === 1 ? 'comida agendada' : 'comidas agendadas'}`}
+                  </p>
+                </div>
+
+                <div class="flex items-center gap-1.5">
+                  <button onclick="toggleNoCookDay('${selectedCalendarDate}')" class="px-3 py-2 rounded-xl text-xs font-bold border transition min-h-[40px] ${
+                    selIsNoCook
+                      ? 'bg-slate-800 text-white border-slate-800'
+                      : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100'
+                  }">
+                    <i class="fa-solid fa-mug-hot mr-1"></i>
+                    <span>${selIsNoCook ? 'Día libre' : 'No cocinaré'}</span>
+                  </button>
+
+                  <button onclick="openScheduleMealModal('${selectedCalendarDate}')" class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-xs flex items-center gap-1 min-h-[40px]">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>Agendar</span>
+                  </button>
+                </div>
+              </div>
+
+              ${selIsNoCook && selMeals.length === 0 ? `
+                <div class="py-6 text-center space-y-1">
+                  <div class="w-12 h-12 rounded-2xl bg-slate-100 text-slate-500 flex items-center justify-center mx-auto text-xl mb-2">
+                    <i class="fa-solid fa-couch"></i>
+                  </div>
+                  <div class="text-sm font-bold text-slate-700">Este día no cocinarás</div>
+                  <p class="text-xs text-slate-400">No se reservarán ingredientes de tu despensa para este día.</p>
+                </div>
+              ` : selMeals.length === 0 ? `
+                <div class="py-6 text-center space-y-2">
+                  <p class="text-xs text-slate-400">Aún no decides qué comer este día.</p>
+                  <button onclick="openScheduleMealModal('${selectedCalendarDate}')" class="px-4 py-2.5 rounded-xl bg-emerald-50 text-emerald-700 font-bold text-xs hover:bg-emerald-100 transition min-h-[40px]">
+                    + Elegir plato del recetario
+                  </button>
+                </div>
+              ` : `
+                <div class="space-y-3">
+                  ${selMeals.map(meal => renderScheduledMealCard(meal, stockEval[meal.id])).join('')}
+                </div>
+              `}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderScheduledMealCard(meal, evaluation) {
+      const recipe = getRecipe(meal.recipeId);
+      if (!recipe) return '';
+      const isCooked = meal.status === 'cooked';
+
+      const mealBadges = {
+        'Desayuno': 'bg-sky-50 text-sky-700 border-sky-200',
+        'Almuerzo': 'bg-amber-50 text-amber-800 border-amber-200',
+        'Cena': 'bg-indigo-50 text-indigo-700 border-indigo-200'
+      };
+
+      return `
+        <div class="p-3.5 rounded-2xl border ${isCooked ? 'bg-emerald-50/40 border-emerald-200' : (evaluation && !evaluation.ok ? 'bg-rose-50/30 border-rose-200' : 'bg-slate-50/70 border-slate-200/80')} space-y-2.5">
+          <div class="flex items-start justify-between gap-2">
+            <div>
+              <div class="flex items-center gap-2 flex-wrap">
+                <span class="px-2 py-0.5 rounded-md border text-[10px] font-extrabold uppercase ${mealBadges[meal.mealType] || mealBadges['Almuerzo']}">
+                  ${meal.mealType}
+                </span>
+                <h5 class="font-extrabold text-slate-800 text-sm">${recipe.name}</h5>
+                <span class="text-[11px] font-semibold text-slate-400"><i class="fa-regular fa-clock mr-0.5"></i>${recipe.prepTimeMin || 25}m</span>
+              </div>
+              <p class="text-[11px] text-slate-500 mt-1">
+                ${recipe.ingredients.map(i => {
+                  const ing = getIngredient(i.ingredientId);
+                  return ing ? `${formatNumber(i.qty)} ${ing.useUnit} ${ing.name.toLowerCase()}` : '';
+                }).filter(Boolean).join(' · ')}
+              </p>
+            </div>
+
+            <div class="flex items-center gap-1 shrink-0">
+              <button onclick="openRecipeDetailsModal('${recipe.id}')" class="text-slate-400 hover:text-emerald-600 p-2 transition" title="Ver procedimiento y tiempos">
+                <i class="fa-solid fa-book-open-reader text-xs"></i>
+              </button>
+              <button onclick="removeScheduledMeal('${meal.id}')" class="text-slate-300 hover:text-rose-500 p-2 transition" title="Quitar del calendario">
+                <i class="fa-solid fa-trash-can text-xs"></i>
+              </button>
+            </div>
+          </div>
+
+          ${!isCooked && evaluation ? (
+            evaluation.ok ? `
+              <div class="flex items-center gap-1.5 text-[11px] font-bold text-emerald-700 bg-emerald-100/70 px-2.5 py-1.5 rounded-xl">
+                <i class="fa-solid fa-circle-check"></i>
+                <span>Ingredientes disponibles y frescos para este día</span>
+              </div>
+            ` : `
+              <div class="bg-rose-100/80 border border-rose-200 text-rose-800 px-3 py-2 rounded-xl space-y-1">
+                <div class="flex items-center gap-1.5 text-[11px] font-extrabold">
+                  <i class="fa-solid fa-triangle-exclamation text-rose-600"></i>
+                  <span>Alerta de inventario para este día:</span>
+                </div>
+                <ul class="text-[11px] font-medium list-disc list-inside space-y-0.5">
+                  ${evaluation.alerts.map(a => `<li>${a}</li>`).join('')}
+                </ul>
+              </div>
+            `
+          ) : ''}
+
+          <div class="pt-0.5">
+            ${isCooked ? `
+              <div class="w-full py-2.5 px-3 rounded-xl bg-emerald-600 text-white text-xs font-bold flex items-center justify-center gap-1.5">
+                <i class="fa-solid fa-check-double"></i>
+                <span>¡Cocinado! Stock descontado y hábito registrado</span>
+              </div>
+            ` : `
+              <button onclick="completeScheduledMeal('${meal.id}')" class="w-full py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:scale-[0.99] text-white text-xs font-bold shadow-xs flex items-center justify-center gap-1.5 transition min-h-[42px]">
+                <i class="fa-solid fa-fire-burner"></i>
+                <span>¡Ya lo cociné! (Descontar y marcar hábito)</span>
+              </button>
+            `}
+          </div>
+        </div>
+      `;
+    }
+
+    function selectCalendarDate(dateStr) {
+      selectedCalendarDate = dateStr;
+      renderCurrentTab();
+    }
+
+    function toggleNoCookDay(dateStr) {
+      if (appState.noCookDays[dateStr]) {
+        delete appState.noCookDays[dateStr];
+        showToast('Día habilitado para cocinar');
+      } else {
+        appState.noCookDays[dateStr] = true;
+        showToast('Marcado como: No cocinaré este día');
+      }
+      saveState();
+      renderCurrentTab();
+    }
+
+    function removeScheduledMeal(scheduleId) {
+      appState.schedule = appState.schedule.filter(s => s.id !== scheduleId);
+      saveState();
+      renderCurrentTab();
+      showToast('Comida quitada del calendario');
+    }
+
+    function completeScheduledMeal(scheduleId) {
+      const meal = appState.schedule.find(s => s.id === scheduleId);
+      if (!meal || meal.status === 'cooked') return;
+      const recipe = getRecipe(meal.recipeId);
+      if (!recipe) return;
+
+      // Descuento FIFO (primero los lotes más próximos a vencer)
+      recipe.ingredients.forEach(req => {
+        let toDeduct = req.qty;
+        const matchingLots = appState.pantry
+          .filter(l => l.ingredientId === req.ingredientId && l.remainingUseQty > 0)
+          .sort((a, b) => a.expiryDate.localeCompare(b.expiryDate));
+
+        for (const lot of matchingLots) {
+          if (toDeduct <= 0) break;
+          if (lot.remainingUseQty >= toDeduct) {
+            lot.remainingUseQty = Number((lot.remainingUseQty - toDeduct).toFixed(2));
+            toDeduct = 0;
+          } else {
+            toDeduct = Number((toDeduct - lot.remainingUseQty).toFixed(2));
+            lot.remainingUseQty = 0;
+          }
+        }
+      });
+
+      appState.pantry = appState.pantry.filter(l => l.remainingUseQty > 0);
+      meal.status = 'cooked';
+
+      const targetDate = meal.date;
+      if (!appState.habitLogs[targetDate]) {
+        appState.habitLogs[targetDate] = { cooked: true, meals: [recipe.name] };
+      } else {
+        appState.habitLogs[targetDate].cooked = true;
+        if (!appState.habitLogs[targetDate].meals.includes(recipe.name)) {
+          appState.habitLogs[targetDate].meals.push(recipe.name);
+        }
+      }
+
+      saveState();
+      renderCurrentTab();
+      showToast(`¡Genial! "${recipe.name}" descontado y racha sumada`);
+    }
+
+    // Modal para registrar "Comida rápida / Comí fuera" sin tocar el inventario de despensa
+    function openQuickMealModal(dateStr) {
+      const info = getDayInfo(dateStr);
+      const modalBox = document.getElementById('modal-box');
+      modalBox.innerHTML = `
+        <div class="p-5 border-b border-slate-100 flex items-center justify-between">
+          <div>
+            <h3 class="text-lg font-extrabold text-slate-800">🥪 Comida Rápida / Comí Fuera</h3>
+            <p class="text-xs text-slate-500">${info.relativeLabel} · No descuenta ingredientes de tu despensa</p>
+          </div>
+          <button onclick="closeModal()" class="w-9 h-9 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <form onsubmit="handleSaveQuickMeal(event, '${dateStr}')" class="p-5 space-y-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-600 uppercase mb-1.5">¿Qué comiste? (opcional)</label>
+            <input type="text" id="quick-meal-label" placeholder="Ej. Pan con huevo, Menú en la calle, Fruta..." class="w-full p-3 rounded-xl border border-slate-300 font-semibold text-slate-800 focus:outline-hidden focus:border-emerald-500" />
+            <div class="flex flex-wrap gap-1.5 mt-2">
+              ${['Pan con huevo', 'Menú en la calle', 'Sánguche / Café', 'Comida en familia'].map(preset => `
+                <button type="button" onclick="document.getElementById('quick-meal-label').value='${preset}'" class="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-amber-100 text-slate-600 hover:text-amber-900 text-xs font-semibold transition">
+                  ${preset}
+                </button>
+              `).join('')}
+            </div>
+          </div>
+
+          <div class="pt-2 flex gap-2">
+            <button type="button" onclick="closeModal()" class="flex-1 py-3 rounded-xl bg-slate-100 font-bold text-slate-600 min-h-[44px]">Cancelar</button>
+            <button type="submit" class="w-2/3 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold shadow-md min-h-[44px]">Marcar Día Cumplido</button>
+          </div>
+        </form>
+      `;
+      openModal();
+    }
+
+    function handleSaveQuickMeal(e, dateStr) {
+      e.preventDefault();
+      const rawText = document.getElementById('quick-meal-label').value.trim();
+      const label = rawText ? `${rawText} (rápido)` : 'Comida rápida / fuera';
+
+      if (!appState.habitLogs[dateStr]) {
+        appState.habitLogs[dateStr] = { cooked: true, meals: [label], type: 'quick' };
+      } else {
+        appState.habitLogs[dateStr].cooked = true;
+        if (!appState.habitLogs[dateStr].meals.includes(label)) {
+          appState.habitLogs[dateStr].meals.push(label);
+        }
+      }
+
+      saveState();
+      closeModal();
+      renderCurrentTab();
+      showToast('¡Hábito registrado sin afectar tu despensa!');
+    }
+
+    function toggleManualHabitDay(dateStr) {
+      const current = appState.habitLogs[dateStr];
+      if (current && current.cooked) {
+        appState.habitLogs[dateStr] = { cooked: false, meals: [] };
+        showToast('Registro de hábito desmarcado', 'warning');
+      } else {
+        appState.habitLogs[dateStr] = {
+          cooked: true,
+          meals: current && current.meals.length ? current.meals : ['Comida casera registrada']
+        };
+        showToast('¡Día cumplido! Sigue manteniendo tu racha');
+      }
+      saveState();
+      renderCurrentTab();
+    }
+
+    function openPastHabitModal(dateStr) {
+      const info = getDayInfo(dateStr);
+      const log = appState.habitLogs[dateStr];
+      const isDone = !!(log && log.cooked);
+
+      const modalBox = document.getElementById('modal-box');
+      modalBox.innerHTML = `
+        <div class="p-5 border-b border-slate-100 flex items-center justify-between">
+          <h3 class="text-lg font-extrabold text-slate-800">Control de Hábito · ${info.dayFull} ${info.dayNum}</h3>
+          <button onclick="closeModal()" class="w-9 h-9 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="p-5 space-y-4">
+          <div class="p-4 rounded-2xl border ${isDone ? 'bg-emerald-50 border-emerald-200' : 'bg-rose-50 border-rose-200'}">
+            <div class="flex items-center gap-2 font-extrabold text-sm ${isDone ? 'text-emerald-800' : 'text-rose-800'}">
+              <i class="fa-solid ${isDone ? 'fa-circle-check text-emerald-600' : 'fa-circle-xmark text-rose-500'}"></i>
+              <span>${isDone ? 'Día cumplido (Alimentación registrada)' : 'Sin comida registrada este día'}</span>
+            </div>
+            ${isDone && log.meals && log.meals.length > 0 ? `
+              <p class="text-xs text-emerald-700 mt-1">Registrado: <strong>${log.meals.join(', ')}</strong></p>
+            ` : `
+              <p class="text-xs text-rose-700 mt-1">No registraste ninguna comida este día.</p>
+            `}
+          </div>
+
+          <div class="grid grid-cols-1 gap-2">
+            <button onclick="closeModal(); openQuickMealModal('${dateStr}');" class="w-full py-3 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 font-bold text-xs min-h-[44px]">
+              🥪 Registrar comida rápida / fuera este día
+            </button>
+            <button onclick="toggleManualHabitDay('${dateStr}'); closeModal();" class="w-full py-3 rounded-xl font-bold text-sm text-white ${isDone ? 'bg-rose-600 hover:bg-rose-700' : 'bg-emerald-600 hover:bg-emerald-700'} shadow-sm min-h-[44px]">
+              ${isDone ? 'Marcar como día sin comida' : 'Marcar este día como cumplido'}
+            </button>
+          </div>
+        </div>
+      `;
+      openModal();
+    }
+
+    function openScheduleMealModal(dateStr) {
+      if (appState.recipes.length === 0) {
+        showToast('Primero crea una receta en tu Recetario', 'warning');
+        switchTab('recipes');
+        return;
+      }
+
+      const info = getDayInfo(dateStr);
+      const modalBox = document.getElementById('modal-box');
+      modalBox.innerHTML = `
+        <div class="p-5 border-b border-slate-100 flex items-center justify-between">
+          <div>
+            <h3 class="text-lg font-extrabold text-slate-800">Agendar Comida</h3>
+            <p class="text-xs text-slate-500">${info.relativeLabel}</p>
+          </div>
+          <button onclick="closeModal()" class="w-9 h-9 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <form onsubmit="handleSaveScheduledMeal(event, '${dateStr}')" class="p-5 space-y-4 overflow-y-auto">
+          <div>
+            <label class="block text-xs font-bold text-slate-600 uppercase mb-1.5">Turno de comida</label>
+            <div class="grid grid-cols-3 gap-2">
+              ${['Desayuno', 'Almuerzo', 'Cena'].map(type => `
+                <label class="cursor-pointer">
+                  <input type="radio" name="meal-type" value="${type}" ${type === 'Almuerzo' ? 'checked' : ''} class="peer hidden" />
+                  <div class="py-3 text-center rounded-xl border border-slate-200 text-xs font-bold text-slate-600 peer-checked:bg-emerald-600 peer-checked:text-white peer-checked:border-emerald-600 transition min-h-[44px] flex items-center justify-center">
+                    ${type}
+                  </div>
+                </label>
+              `).join('')}
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-600 uppercase mb-1.5">¿Qué plato vas a preparar?</label>
+            <select id="sch-recipe-id" class="w-full p-3 rounded-xl border border-slate-300 bg-white font-bold text-slate-800 focus:outline-hidden focus:border-emerald-500 min-h-[46px]">
+              ${appState.recipes.map(r => `<option value="${r.id}">${r.name} (${r.prepTimeMin || 25} min · ${r.servings} porc.)</option>`).join('')}
+            </select>
+          </div>
+
+          <div class="pt-2 flex gap-2">
+            <button type="button" onclick="closeModal()" class="flex-1 py-3 rounded-xl bg-slate-100 font-bold text-slate-600 min-h-[44px]">Cancelar</button>
+            <button type="submit" class="w-2/3 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold shadow-md min-h-[44px]">Agregar al Calendario</button>
+          </div>
+        </form>
+      `;
+      openModal();
+    }
+
+    function handleSaveScheduledMeal(e, dateStr) {
+      e.preventDefault();
+      const mealType = document.querySelector('input[name="meal-type"]:checked').value;
+      const recipeId = document.getElementById('sch-recipe-id').value;
+
+      if (appState.noCookDays[dateStr]) {
+        delete appState.noCookDays[dateStr];
+      }
+
+      appState.schedule.push({
+        id: 'sch_' + Date.now(),
+        date: dateStr,
+        mealType,
+        recipeId,
+        status: 'planned'
+      });
+
+      saveState();
+      closeModal();
+      renderCurrentTab();
+      showToast('Plato agendado en tu calendario');
+    }
+
+    /**
+     * ============================================================================
+     * PESTAÑA 2: MI DESPENSA (INVENTARIO PERECEDERO CON AJUSTE RÁPIDO)
+     * ============================================================================
+     */
+    function renderPantryTab(container) {
+      const activeLots = appState.pantry
+        .filter(lot => lot.remainingUseQty > 0 && getIngredient(lot.ingredientId))
+        .map(lot => ({
+          ...lot,
+          ingredient: getIngredient(lot.ingredientId),
+          daysLeft: getDaysRemaining(lot.expiryDate)
+        }))
+        .sort((a, b) => a.daysLeft - b.daysLeft);
+
+      const totalLots = activeLots.length;
+      const expiringSoon = activeLots.filter(l => l.daysLeft >= 0 && l.daysLeft <= 2).length;
+      const expiredCount = activeLots.filter(l => l.daysLeft < 0).length;
+
+      const filteredLots = pantryFilter === 'expiring'
+        ? activeLots.filter(l => l.daysLeft <= 2)
+        : activeLots;
+
+      container.innerHTML = `
+        <div class="space-y-4 animate-fade-in">
+          <div class="grid grid-cols-3 gap-2.5">
+            <div class="bg-white p-3 rounded-2xl border border-slate-200/70 shadow-2xs">
+              <div class="text-xs font-medium text-slate-500">En despensa</div>
+              <div class="text-xl font-extrabold text-slate-800 mt-0.5">${totalLots} <span class="text-xs font-normal text-slate-400">lotes</span></div>
+            </div>
+            <div class="bg-amber-50/70 p-3 rounded-2xl border border-amber-200/70 shadow-2xs">
+              <div class="text-xs font-semibold text-amber-700">Por vencer</div>
+              <div class="text-xl font-extrabold text-amber-600 mt-0.5">${expiringSoon} <span class="text-xs font-normal text-amber-600/70">≤2d</span></div>
+            </div>
+            <div class="bg-rose-50/70 p-3 rounded-2xl border border-rose-200/70 shadow-2xs">
+              <div class="text-xs font-semibold text-rose-700">Vencidos</div>
+              <div class="text-xl font-extrabold text-rose-600 mt-0.5">${expiredCount}</div>
+            </div>
+          </div>
+
+          <button onclick="openAddPurchaseModal()" class="w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 active:scale-[0.99] text-white font-bold shadow-md shadow-emerald-600/20 flex items-center justify-center gap-2 transition min-h-[48px]">
+            <i class="fa-solid fa-plus-circle text-lg"></i>
+            <span>Registrar Nueva Compra</span>
+          </button>
+
+          <div class="flex items-center justify-between pt-1">
+            <h2 class="text-sm font-bold text-slate-700 uppercase tracking-wider">Inventario por Urgencia</h2>
+            <div class="flex bg-slate-200/70 p-1 rounded-xl text-xs font-semibold">
+              <button onclick="pantryFilter = 'all'; renderCurrentTab();" class="px-3 py-1.5 rounded-lg transition ${pantryFilter === 'all' ? 'bg-white text-slate-800 shadow-2xs' : 'text-slate-500'}">Todos (${totalLots})</button>
+              <button onclick="pantryFilter = 'expiring'; renderCurrentTab();" class="px-3 py-1.5 rounded-lg transition ${pantryFilter === 'expiring' ? 'bg-white text-rose-600 shadow-2xs' : 'text-slate-500'}">Urgentes (${expiringSoon + expiredCount})</button>
+            </div>
+          </div>
+
+          ${filteredLots.length === 0 ? `
+            <div class="bg-white rounded-3xl p-8 text-center border border-slate-200/70">
+              <div class="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-500 flex items-center justify-center mx-auto mb-3 text-2xl">
+                <i class="fa-solid fa-leaf"></i>
+              </div>
+              <h3 class="font-bold text-slate-800">${pantryFilter === 'expiring' ? '¡Nada por malograrse!' : 'Tu despensa está vacía'}</h3>
+              <p class="text-sm text-slate-500 mt-1">${pantryFilter === 'expiring' ? 'Todos tus productos tienen buena vida útil.' : 'Registra tus compras para controlar unidades y vencimientos.'}</p>
+            </div>
+          ` : `
+            <div class="space-y-3">
+              ${filteredLots.map(lot => renderPantryLotCard(lot)).join('')}
+            </div>
+          `}
+        </div>
+      `;
+    }
+
+    function renderPantryLotCard(lot) {
+      const { ingredient, daysLeft } = lot;
+      const catStyle = getCategoryIcon(ingredient.category);
+
+      let statusBadge = '';
+      let barColor = 'bg-emerald-500';
+      let cardBorder = 'border-slate-200/80';
+
+      if (daysLeft < 0) {
+        statusBadge = `<span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-rose-100 text-rose-700"><i class="fa-solid fa-triangle-exclamation mr-1"></i>Venció hace ${Math.abs(daysLeft)}d</span>`;
+        barColor = 'bg-rose-500';
+        cardBorder = 'border-rose-300 bg-rose-50/20';
+      } else if (daysLeft === 0) {
+        statusBadge = `<span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-rose-100 text-rose-700 animate-pulse"><i class="fa-solid fa-fire mr-1"></i>¡Úsalo hoy!</span>`;
+        barColor = 'bg-rose-500';
+        cardBorder = 'border-rose-300';
+      } else if (daysLeft === 1) {
+        statusBadge = `<span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-rose-100 text-rose-700"><i class="fa-solid fa-clock mr-1"></i>Vence mañana</span>`;
+        barColor = 'bg-rose-500';
+        cardBorder = 'border-rose-300';
+      } else if (daysLeft <= 3) {
+        statusBadge = `<span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-100 text-amber-800"><i class="fa-solid fa-clock mr-1"></i>Vence en ${daysLeft}d</span>`;
+        barColor = 'bg-amber-500';
+        cardBorder = 'border-amber-300';
+      } else {
+        statusBadge = `<span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-700">Dura ${daysLeft} días</span>`;
+        barColor = 'bg-emerald-500';
+      }
+
+      const totalShelf = Math.max(1, ingredient.shelfLifeDays);
+      const lifePercent = Math.max(4, Math.min(100, Math.round((daysLeft / totalShelf) * 100)));
+      const equivBuyQty = formatNumber(lot.remainingUseQty / ingredient.factor);
+      const step = ingredient.factor >= 100 ? 50 : 1;
+
+      return `
+        <div class="bg-white rounded-2xl p-4 border ${cardBorder} shadow-2xs transition">
+          <div class="flex items-start justify-between gap-2">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl ${catStyle.color} flex items-center justify-center shrink-0">
+                <i class="fa-solid ${catStyle.icon} text-base"></i>
+              </div>
+              <div>
+                <div class="flex items-center gap-2 flex-wrap">
+                  <h3 class="font-bold text-slate-800 text-base leading-tight">${ingredient.name}</h3>
+                  ${statusBadge}
+                </div>
+                <p class="text-xs text-slate-400 mt-0.5">
+                  Comprado el ${getDayInfo(lot.purchaseDate).formatted} · Vence ${getDayInfo(lot.expiryDate).formatted}
+                </p>
+              </div>
+            </div>
+
+            <button onclick="deleteLot('${lot.id}')" class="text-slate-300 hover:text-rose-500 p-2 transition" title="Descartar / Se malogró">
+              <i class="fa-solid fa-trash-can text-sm"></i>
+            </button>
+          </div>
+
+          <div class="mt-3 pt-3 border-t border-slate-100 flex items-center justify-between gap-3">
+            <div>
+              <div class="flex items-baseline gap-1.5">
+                <span class="text-xl font-extrabold text-slate-800">${formatNumber(lot.remainingUseQty)}</span>
+                <span class="text-xs font-semibold text-slate-600">${ingredient.useUnit}</span>
+                ${ingredient.factor !== 1 ? `<span class="text-xs text-slate-400">(~${equivBuyQty} ${ingredient.buyUnit})</span>` : ''}
+              </div>
+            </div>
+
+            <div class="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl">
+              <button onclick="adjustLotQty('${lot.id}', -${step})" class="w-9 h-9 rounded-lg bg-white text-slate-700 hover:bg-rose-50 hover:text-rose-600 font-bold shadow-2xs flex items-center justify-center active:scale-95 transition">
+                <i class="fa-solid fa-minus text-xs"></i>
+              </button>
+              <span class="text-[11px] font-bold text-slate-500 px-1">±${step}</span>
+              <button onclick="adjustLotQty('${lot.id}', ${step})" class="w-9 h-9 rounded-lg bg-white text-slate-700 hover:bg-emerald-50 hover:text-emerald-600 font-bold shadow-2xs flex items-center justify-center active:scale-95 transition">
+                <i class="fa-solid fa-plus text-xs"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="mt-2.5 w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+            <div class="${barColor} h-full rounded-full transition-all duration-300" style="width: ${daysLeft < 0 ? 100 : lifePercent}%"></div>
+          </div>
+        </div>
+      `;
+    }
+
+    function adjustLotQty(lotId, delta) {
+      const lot = appState.pantry.find(l => l.id === lotId);
+      if (!lot) return;
+      lot.remainingUseQty = Math.max(0, Number((lot.remainingUseQty + delta).toFixed(2)));
+      if (lot.remainingUseQty === 0) {
+        appState.pantry = appState.pantry.filter(l => l.id !== lotId);
+        showToast('Producto terminado y retirado');
+      }
+      saveState();
+      renderCurrentTab();
+    }
+
+    function deleteLot(lotId) {
+      appState.pantry = appState.pantry.filter(l => l.id !== lotId);
+      saveState();
+      renderCurrentTab();
+      showToast('Lote retirado de la despensa');
+    }
+
+    function openAddPurchaseModal() {
+      if (appState.catalog.length === 0) {
+        showToast('Primero crea un ingrediente en el Catálogo', 'warning');
+        return;
+      }
+      const firstIng = appState.catalog[0];
+      const modalBox = document.getElementById('modal-box');
+      modalBox.innerHTML = `
+        <div class="p-5 border-b border-slate-100 flex items-center justify-between">
+          <h3 class="text-lg font-extrabold text-slate-800">Registrar Compra</h3>
+          <button onclick="closeModal()" class="w-9 h-9 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <form onsubmit="handleSavePurchase(event)" class="p-5 space-y-4 overflow-y-auto">
+          <div>
+            <label class="block text-xs font-bold text-slate-600 uppercase mb-1.5">¿Qué compraste?</label>
+            <select id="buy-ing-id" onchange="updatePurchasePreview()" class="w-full p-3 rounded-xl border border-slate-300 bg-white font-semibold text-slate-800 focus:outline-hidden focus:border-emerald-500 min-h-[46px]">
+              ${appState.catalog.map(ing => `<option value="${ing.id}">${ing.name} (${ing.category})</option>`).join('')}
+            </select>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label id="buy-qty-label" class="block text-xs font-bold text-slate-600 uppercase mb-1.5">Cantidad (${firstIng.buyUnit})</label>
+              <input type="number" id="buy-qty" step="0.01" min="0.01" value="1" required oninput="updatePurchasePreview()" class="w-full p-3 rounded-xl border border-slate-300 font-bold text-slate-800 focus:outline-hidden focus:border-emerald-500 min-h-[46px]" />
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-600 uppercase mb-1.5">Fecha de compra</label>
+              <input type="date" id="buy-date" value="${getTodayStr(0)}" required onchange="updatePurchasePreview()" class="w-full p-3 rounded-xl border border-slate-300 font-semibold text-slate-800 focus:outline-hidden focus:border-emerald-500 min-h-[46px]" />
+            </div>
+          </div>
+
+          <div id="purchase-preview" class="bg-emerald-50 border border-emerald-200 rounded-2xl p-4 space-y-1"></div>
+
+          <div class="pt-2 flex gap-2">
+            <button type="button" onclick="closeModal()" class="flex-1 py-3 rounded-xl bg-slate-100 font-bold text-slate-600 min-h-[44px]">Cancelar</button>
+            <button type="submit" class="w-2/3 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold shadow-md shadow-emerald-600/20 min-h-[44px]">Guardar en Despensa</button>
+          </div>
+        </form>
+      `;
+      openModal();
+      updatePurchasePreview();
+    }
+
+    function updatePurchasePreview() {
+      const ingId = document.getElementById('buy-ing-id').value;
+      const qty = parseFloat(document.getElementById('buy-qty').value) || 0;
+      const buyDate = document.getElementById('buy-date').value || getTodayStr(0);
+      const ing = getIngredient(ingId);
+      if (!ing) return;
+
+      document.getElementById('buy-qty-label').textContent = `Cantidad (${ing.buyUnit})`;
+      const convertedQty = formatNumber(qty * ing.factor);
+      const expiryDate = addDaysToDateStr(buyDate, ing.shelfLifeDays);
+      const daysFromToday = getDaysRemaining(expiryDate);
+      const estCost = (qty * (ing.refPrice || 0));
+
+      document.getElementById('purchase-preview').innerHTML = `
+        <div class="flex items-center justify-between text-emerald-800 font-bold text-sm">
+          <span><i class="fa-solid fa-wand-magic-sparkles text-emerald-600 mr-1.5"></i>Conversión automática:</span>
+          ${estCost > 0 ? `<span class="text-xs px-2 py-0.5 rounded-lg bg-white text-emerald-700 font-extrabold">~${formatSoles(estCost)}</span>` : ''}
+        </div>
+        <p class="text-sm text-emerald-900">
+          Se agregarán <strong>~${convertedQty} ${ing.useUnit}</strong> a tu despensa.
+        </p>
+        <p class="text-xs text-emerald-700">
+          Vida útil estimada: <strong>${ing.shelfLifeDays} días</strong> (vence el ${getDayInfo(expiryDate).formatted} · ${daysFromToday >= 0 ? `en ${daysFromToday} días` : 'vencido'}).
+        </p>
+      `;
+    }
+
+    function handleSavePurchase(e) {
+      e.preventDefault();
+      const ingId = document.getElementById('buy-ing-id').value;
+      const buyQty = parseFloat(document.getElementById('buy-qty').value);
+      const purchaseDate = document.getElementById('buy-date').value;
+      const ing = getIngredient(ingId);
+      if (!ing || buyQty <= 0) return;
+
+      const totalUseQty = Number((buyQty * ing.factor).toFixed(2));
+      const expiryDate = addDaysToDateStr(purchaseDate, ing.shelfLifeDays);
+
+      appState.pantry.push({
+        id: 'lot_' + Date.now(),
+        ingredientId: ingId,
+        buyQty,
+        remainingUseQty: totalUseQty,
+        initialUseQty: totalUseQty,
+        purchaseDate,
+        expiryDate
+      });
+
+      saveState();
+      closeModal();
+      renderCurrentTab();
+      showToast(`+${formatNumber(totalUseQty)} ${ing.useUnit} de ${ing.name} agregados`);
+    }
+
+    /**
+     * ============================================================================
+     * PESTAÑA 3: RECETARIO CON PROCEDIMIENTO Y TIEMPOS + CATÁLOGO CON PRECIOS (S/)
+     * ============================================================================
+     */
+    function renderRecipesAndCatalogTab(container) {
+      container.innerHTML = `
+        <div class="space-y-4 animate-fade-in">
+          <div class="grid grid-cols-2 bg-slate-200/80 p-1 rounded-2xl">
+            <button onclick="recipesSubTab = 'recipes'; renderCurrentTab();" class="py-2.5 rounded-xl text-xs font-extrabold transition flex items-center justify-center gap-1.5 min-h-[42px] ${
+              recipesSubTab === 'recipes' ? 'bg-white text-emerald-700 shadow-xs' : 'text-slate-600'
+            }">
+              <i class="fa-solid fa-utensils"></i>
+              <span>Mis Recetas (${appState.recipes.length})</span>
+            </button>
+            <button onclick="recipesSubTab = 'catalog'; renderCurrentTab();" class="py-2.5 rounded-xl text-xs font-extrabold transition flex items-center justify-center gap-1.5 min-h-[42px] ${
+              recipesSubTab === 'catalog' ? 'bg-white text-emerald-700 shadow-xs' : 'text-slate-600'
+            }">
+              <i class="fa-solid fa-scale-balanced"></i>
+              <span>Ingredientes y S/ (${appState.catalog.length})</span>
+            </button>
+          </div>
+
+          ${recipesSubTab === 'recipes' ? renderRecipesSection() : renderCatalogSection()}
+        </div>
+      `;
+    }
+
+    function renderRecipesSection() {
+      return `
+        <div class="space-y-3.5">
+          <div class="flex items-center justify-between gap-2">
+            <div>
+              <h2 class="text-base font-extrabold text-slate-800">Mis Platos y Apuntes</h2>
+              <p class="text-xs text-slate-500">Ingredientes, tiempos y tus trucos de preparación</p>
+            </div>
+            <button onclick="openRecipeModal()" class="py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-sm flex items-center gap-1.5 min-h-[42px] shrink-0">
+              <i class="fa-solid fa-plus"></i>
+              <span>Nueva Receta</span>
+            </button>
+          </div>
+
+          ${appState.recipes.map(recipe => {
+            let allAvailable = true;
+            const ingDetails = recipe.ingredients.map(item => {
+              const ing = getIngredient(item.ingredientId);
+              if (!ing) return null;
+              const available = getTotalStockForIngredient(ing.id);
+              const hasEnough = available >= item.qty;
+              if (!hasEnough) allAvailable = false;
+              return { ing, required: item.qty, available, hasEnough };
+            }).filter(Boolean);
+
+            return `
+              <div class="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-2xs space-y-3">
+                <div class="flex items-start justify-between gap-2">
+                  <div>
+                    <div class="flex items-center gap-2 flex-wrap">
+                      <h3 class="font-extrabold text-slate-800 text-base">${recipe.name}</h3>
+                      <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-700">
+                        <i class="fa-regular fa-clock text-emerald-600 mr-0.5"></i>${recipe.prepTimeMin || 25} min
+                      </span>
+                      ${allAvailable
+                        ? `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-700">Stock hoy OK</span>`
+                        : `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800">Falta stock hoy</span>`
+                      }
+                    </div>
+                    <p class="text-xs text-slate-400 mt-0.5">${recipe.servings} porciones ${recipe.notes ? `· ${recipe.notes}` : ''}</p>
+                  </div>
+                  <div class="flex items-center gap-1 shrink-0">
+                    <button onclick="openRecipeModal('${recipe.id}')" class="p-2 text-slate-400 hover:text-emerald-600 transition" title="Editar"><i class="fa-solid fa-pen text-xs"></i></button>
+                    <button onclick="deleteRecipe('${recipe.id}')" class="p-2 text-slate-400 hover:text-rose-500 transition" title="Eliminar"><i class="fa-solid fa-trash-can text-xs"></i></button>
+                  </div>
+                </div>
+
+                <div class="bg-slate-50 rounded-xl p-3 space-y-1.5">
+                  ${ingDetails.map(d => `
+                    <div class="flex items-center justify-between text-xs">
+                      <span class="font-semibold text-slate-700">${d.ing.name}</span>
+                      <span class="${d.hasEnough ? 'text-slate-600' : 'text-rose-600 font-bold'}">
+                        Pide ${formatNumber(d.required)} · Tienes ${formatNumber(d.available)} ${d.ing.useUnit}
+                      </span>
+                    </div>
+                  `).join('')}
+                </div>
+
+                <div class="grid grid-cols-2 gap-2">
+                  <button onclick="openRecipeDetailsModal('${recipe.id}')" class="py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold flex items-center justify-center gap-1.5 transition min-h-[42px]">
+                    <i class="fa-solid fa-book-open-reader text-emerald-600"></i>
+                    <span>Preparación y pasos</span>
+                  </button>
+                  <button onclick="quickScheduleRecipe('${recipe.id}')" class="py-2.5 px-3 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-700 text-xs font-bold flex items-center justify-center gap-1.5 transition min-h-[42px]">
+                    <i class="fa-solid fa-calendar-plus"></i>
+                    <span>Agendar</span>
+                  </button>
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      `;
+    }
+
+    // Modal de lectura clara de preparación, tiempos y apuntes personales
+    function openRecipeDetailsModal(recipeId) {
+      const recipe = getRecipe(recipeId);
+      if (!recipe) return;
+
+      const modalBox = document.getElementById('modal-box');
+      modalBox.innerHTML = `
+        <div class="p-5 border-b border-slate-100 flex items-center justify-between">
+          <div>
+            <h3 class="text-lg font-extrabold text-slate-800">${recipe.name}</h3>
+            <div class="flex items-center gap-3 text-xs text-slate-500 mt-0.5">
+              <span class="font-bold text-emerald-700"><i class="fa-regular fa-clock mr-1"></i>${recipe.prepTimeMin || 25} minutos</span>
+              <span><i class="fa-solid fa-utensils mr-1"></i>${recipe.servings} porciones</span>
+            </div>
+          </div>
+          <button onclick="closeModal()" class="w-9 h-9 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+
+        <div class="p-5 space-y-4 overflow-y-auto">
+          ${recipe.notes ? `
+            <div class="bg-amber-50 border border-amber-200/80 rounded-2xl p-3 text-xs text-amber-900 font-medium">
+              <i class="fa-solid fa-lightbulb text-amber-500 mr-1.5"></i>${recipe.notes}
+            </div>
+          ` : ''}
+
+          <div>
+            <h4 class="text-xs font-extrabold text-slate-500 uppercase mb-2">Ingredientes exactos</h4>
+            <div class="bg-slate-50 rounded-2xl p-3 space-y-1.5 border border-slate-200/70">
+              ${recipe.ingredients.map(item => {
+                const ing = getIngredient(item.ingredientId);
+                if (!ing) return '';
+                const stock = getTotalStockForIngredient(ing.id);
+                return `
+                  <div class="flex items-center justify-between text-xs">
+                    <span class="font-bold text-slate-800">• ${ing.name}</span>
+                    <span class="${stock >= item.qty ? 'text-emerald-700' : 'text-rose-600'} font-semibold">
+                      ${formatNumber(item.qty)} ${ing.useUnit} <span class="text-slate-400 font-normal">(tienes ${formatNumber(stock)})</span>
+                    </span>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          </div>
+
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <h4 class="text-xs font-extrabold text-slate-500 uppercase">Procedimiento y mis apuntes</h4>
+              <button onclick="openRecipeModal('${recipe.id}')" class="text-xs font-bold text-emerald-600 hover:underline">
+                <i class="fa-solid fa-pen mr-1"></i>Editar pasos
+              </button>
+            </div>
+            <div class="bg-white rounded-2xl p-4 border border-slate-200 text-sm text-slate-700 leading-relaxed whitespace-pre-line">
+              ${recipe.instructions && recipe.instructions.trim()
+                ? recipe.instructions
+                : '<span class="text-slate-400 italic text-xs">Aún no escribiste el procedimiento para este plato. Dale a "Editar pasos" para anotar cuánta sal echas o los tiempos de cocción.</span>'}
+            </div>
+          </div>
+
+          <div class="pt-1 flex gap-2">
+            <button onclick="closeModal()" class="flex-1 py-3 rounded-xl bg-slate-100 font-bold text-slate-600 min-h-[44px]">Cerrar</button>
+            <button onclick="closeModal(); quickScheduleRecipe('${recipe.id}');" class="w-2/3 py-3 rounded-xl bg-emerald-600 text-white font-bold shadow-sm min-h-[44px]">Agendar en Calendario</button>
+          </div>
+        </div>
+      `;
+      openModal();
+    }
+
+    function quickScheduleRecipe(recipeId) {
+      appState.schedule.push({
+        id: 'sch_' + Date.now(),
+        date: selectedCalendarDate,
+        mealType: 'Almuerzo',
+        recipeId,
+        status: 'planned'
+      });
+      if (appState.noCookDays[selectedCalendarDate]) delete appState.noCookDays[selectedCalendarDate];
+      saveState();
+      switchTab('calendar');
+      showToast(`Agendado para ${getDayInfo(selectedCalendarDate).relativeLabel}`);
+    }
+
+    function renderCatalogSection() {
+      const filtered = appState.catalog.filter(i =>
+        i.name.toLowerCase().includes(catalogSearch.toLowerCase()) ||
+        i.category.toLowerCase().includes(catalogSearch.toLowerCase())
+      );
+
+      return `
+        <div class="space-y-3.5">
+          <div class="flex items-center justify-between gap-2">
+            <div>
+              <h2 class="text-base font-extrabold text-slate-800">Reglas de Compra, Duración y S/</h2>
+              <p class="text-xs text-slate-500">Equivalencias y precio referencial en Soles</p>
+            </div>
+            <button onclick="openCatalogModal()" class="py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-sm flex items-center gap-1.5 shrink-0 min-h-[42px]">
+              <i class="fa-solid fa-plus"></i>
+              <span>Nuevo</span>
+            </button>
+          </div>
+
+          <div class="relative">
+            <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+            <input type="text" placeholder="Buscar ingrediente..." value="${catalogSearch}" oninput="catalogSearch = this.value; renderCurrentTab();" class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white border border-slate-200 text-sm font-medium focus:outline-hidden focus:border-emerald-500 min-h-[44px]" />
+          </div>
+
+          <div class="space-y-2.5">
+            ${filtered.map(ing => {
+              const cat = getCategoryIcon(ing.category);
+              return `
+                <div class="bg-white rounded-2xl p-3.5 border border-slate-200/80 shadow-2xs flex items-center justify-between gap-3">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl ${cat.color} flex items-center justify-center shrink-0">
+                      <i class="fa-solid ${cat.icon}"></i>
+                    </div>
+                    <div>
+                      <div class="flex items-center gap-2 flex-wrap">
+                        <h3 class="font-bold text-slate-800 text-sm">${ing.name}</h3>
+                        <span class="text-[10px] font-semibold px-2 py-0.5 rounded-md bg-slate-100 text-slate-500">${ing.category}</span>
+                        ${ing.refPrice > 0 ? `<span class="text-[10px] font-extrabold px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200/70">${formatSoles(ing.refPrice)} / ${ing.buyUnit}</span>` : ''}
+                      </div>
+                      <p class="text-xs text-slate-500 mt-0.5">
+                        1 <strong>${ing.buyUnit}</strong> = <strong>${ing.factor} ${ing.useUnit}</strong> · Dura <strong>${ing.shelfLifeDays}d</strong>
+                      </p>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-1 shrink-0">
+                    <button onclick="openCatalogModal('${ing.id}')" class="p-2 text-slate-400 hover:text-emerald-600 transition"><i class="fa-solid fa-pen text-xs"></i></button>
+                    <button onclick="deleteCatalogItem('${ing.id}')" class="p-2 text-slate-400 hover:text-rose-500 transition"><i class="fa-solid fa-trash-can text-xs"></i></button>
+                  </div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    // Modal Receta (ahora con Tiempo estimado y Procedimiento/Apuntes)
+    let tempRecipeIngredients = [];
+    function openRecipeModal(editId = null) {
+      const existing = editId ? getRecipe(editId) : null;
+      tempRecipeIngredients = existing
+        ? existing.ingredients.map(i => ({ ...i }))
+        : [{ ingredientId: appState.catalog[0].id, qty: 1 }];
+
+      const modalBox = document.getElementById('modal-box');
+      modalBox.innerHTML = `
+        <div class="p-5 border-b border-slate-100 flex items-center justify-between">
+          <h3 class="text-lg font-extrabold text-slate-800">${existing ? 'Editar Receta y Pasos' : 'Nueva Receta'}</h3>
+          <button onclick="closeModal()" class="w-9 h-9 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <form onsubmit="handleSaveRecipe(event, '${editId || ''}')" class="p-5 space-y-4 overflow-y-auto">
+          <div>
+            <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Nombre del plato</label>
+            <input type="text" id="rec-name" required placeholder="Ej. Lomo saltado casero" value="${existing ? existing.name : ''}" class="w-full p-2.5 rounded-xl border border-slate-300 font-semibold text-slate-800 min-h-[44px]" />
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Tiempo total (min)</label>
+              <input type="number" id="rec-time" min="1" required value="${existing ? (existing.prepTimeMin || 25) : 25}" class="w-full p-2.5 rounded-xl border border-slate-300 font-bold text-slate-800 min-h-[44px]" />
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Porciones</label>
+              <input type="number" id="rec-servings" min="1" required value="${existing ? existing.servings : 2}" class="w-full p-2.5 rounded-xl border border-slate-300 font-bold text-slate-800 min-h-[44px]" />
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Resumen / Tip rápido (opcional)</label>
+            <input type="text" id="rec-notes" placeholder="Ej. Servir con arroz blanco graneado" value="${existing ? (existing.notes || '') : ''}" class="w-full p-2.5 rounded-xl border border-slate-300 text-sm text-slate-700 min-h-[44px]" />
+          </div>
+
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <label class="text-xs font-bold text-slate-600 uppercase">Ingredientes necesarios</label>
+              <button type="button" onclick="tempRecipeIngredients.push({ ingredientId: appState.catalog[0].id, qty: 1 }); renderTempRecipeIngredients();" class="text-xs font-bold text-emerald-600 flex items-center gap-1 py-1">
+                <i class="fa-solid fa-plus-circle"></i> Añadir otro
+              </button>
+            </div>
+            <div id="recipe-ing-list" class="space-y-2 max-h-40 overflow-y-auto pr-1"></div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Procedimiento y mis apuntes (sal, tiempos de hervor, etc.)</label>
+            <textarea id="rec-instructions" rows="4" placeholder="Escribe paso a paso cómo lo preparas, cuánta sal le pones, cuántos minutos esperas..." class="w-full p-3 rounded-xl border border-slate-300 text-sm text-slate-800 focus:outline-hidden focus:border-emerald-500 leading-relaxed">${existing ? (existing.instructions || '') : ''}</textarea>
+          </div>
+
+          <div class="pt-2 flex gap-2">
+            <button type="button" onclick="closeModal()" class="flex-1 py-3 rounded-xl bg-slate-100 font-bold text-slate-600 min-h-[44px]">Cancelar</button>
+            <button type="submit" class="w-2/3 py-3 rounded-xl bg-emerald-600 text-white font-bold shadow-md min-h-[44px]">Guardar Receta</button>
+          </div>
+        </form>
+      `;
+      openModal();
+      renderTempRecipeIngredients();
+    }
+
+    function renderTempRecipeIngredients() {
+      const listEl = document.getElementById('recipe-ing-list');
+      listEl.innerHTML = tempRecipeIngredients.map((item, idx) => {
+        const ing = getIngredient(item.ingredientId) || appState.catalog[0];
+        return `
+          <div class="flex items-center gap-2 bg-slate-50 p-2 rounded-xl border border-slate-200">
+            <select onchange="tempRecipeIngredients[${idx}].ingredientId = this.value; renderTempRecipeIngredients();" class="flex-1 p-2 rounded-lg border border-slate-200 bg-white text-xs font-bold text-slate-700 min-h-[38px]">
+              ${appState.catalog.map(c => `<option value="${c.id}" ${c.id === item.ingredientId ? 'selected' : ''}>${c.name}</option>`).join('')}
+            </select>
+            <input type="number" step="0.1" min="0.1" value="${item.qty}" oninput="tempRecipeIngredients[${idx}].qty = parseFloat(this.value) || 0;" class="w-20 p-2 rounded-lg border border-slate-200 bg-white text-xs font-bold text-center text-slate-800 min-h-[38px]" />
+            <span class="text-[11px] font-semibold text-slate-500 w-16 truncate">${ing.useUnit}</span>
+            ${tempRecipeIngredients.length > 1 ? `<button type="button" onclick="tempRecipeIngredients.splice(${idx}, 1); renderTempRecipeIngredients();" class="text-rose-400 p-1.5"><i class="fa-solid fa-xmark"></i></button>` : ''}
+          </div>
+        `;
+      }).join('');
+    }
+
+    function handleSaveRecipe(e, editId) {
+      e.preventDefault();
+      const name = document.getElementById('rec-name').value.trim();
+      const prepTimeMin = parseInt(document.getElementById('rec-time').value) || 25;
+      const servings = parseInt(document.getElementById('rec-servings').value) || 2;
+      const notes = document.getElementById('rec-notes').value.trim();
+      const instructions = document.getElementById('rec-instructions').value.trim();
+
+      const mergedMap = {};
+      tempRecipeIngredients.forEach(item => {
+        if (item.qty > 0) mergedMap[item.ingredientId] = (mergedMap[item.ingredientId] || 0) + item.qty;
+      });
+      const finalIngredients = Object.entries(mergedMap).map(([ingredientId, qty]) => ({ ingredientId, qty }));
+      if (!name || finalIngredients.length === 0) return;
+
+      if (editId) {
+        const idx = appState.recipes.findIndex(r => r.id === editId);
+        if (idx !== -1) appState.recipes[idx] = { id: editId, name, prepTimeMin, servings, notes, instructions, ingredients: finalIngredients };
+      } else {
+        appState.recipes.push({ id: 'rec_' + Date.now(), name, prepTimeMin, servings, notes, instructions, ingredients: finalIngredients });
+      }
+      saveState();
+      closeModal();
+      renderCurrentTab();
+      showToast('Receta y apuntes guardados');
+    }
+
+    function deleteRecipe(id) {
+      appState.recipes = appState.recipes.filter(r => r.id !== id);
+      appState.schedule = appState.schedule.filter(s => s.recipeId !== id);
+      saveState();
+      renderCurrentTab();
+      showToast('Receta eliminada');
+    }
+
+    // Modal Catálogo (ahora con Precio Referencial en Soles S/)
+    function openCatalogModal(editId = null) {
+      const existing = editId ? getIngredient(editId) : null;
+      const modalBox = document.getElementById('modal-box');
+      modalBox.innerHTML = `
+        <div class="p-5 border-b border-slate-100 flex items-center justify-between">
+          <h3 class="text-lg font-extrabold text-slate-800">${existing ? 'Editar Ingrediente' : 'Nuevo Ingrediente'}</h3>
+          <button onclick="closeModal()" class="w-9 h-9 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <form onsubmit="handleSaveCatalog(event, '${editId || ''}')" class="p-5 space-y-4 overflow-y-auto">
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Nombre</label>
+              <input type="text" id="cat-name" required placeholder="Ej. Zanahoria" value="${existing ? existing.name : ''}" class="w-full p-2.5 rounded-xl border border-slate-300 font-semibold text-slate-800 min-h-[44px]" />
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Categoría</label>
+              <select id="cat-category" class="w-full p-2.5 rounded-xl border border-slate-300 font-semibold text-slate-800 bg-white min-h-[44px]">
+                ${['Verduras', 'Carnes', 'Abarrotes', 'Lácteos', 'Otros'].map(c => `<option value="${c}" ${existing && existing.category === c ? 'selected' : ''}>${c}</option>`).join('')}
+              </select>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Unidad de compra</label>
+              <input type="text" id="cat-buy-unit" required placeholder="Ej. kg, paquete" value="${existing ? existing.buyUnit : 'kg'}" class="w-full p-2.5 rounded-xl border border-slate-300 font-semibold text-slate-800 min-h-[44px]" />
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Unidad de cocina</label>
+              <input type="text" id="cat-use-unit" required placeholder="Ej. unidades, gramos" value="${existing ? existing.useUnit : 'unidades'}" class="w-full p-2.5 rounded-xl border border-slate-300 font-semibold text-slate-800 min-h-[44px]" />
+            </div>
+          </div>
+          <div class="grid grid-cols-3 gap-2.5">
+            <div>
+              <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">1 compra = ?</label>
+              <input type="number" step="0.01" min="0.01" id="cat-factor" required value="${existing ? existing.factor : 6}" class="w-full p-2.5 rounded-xl border border-slate-300 font-bold text-slate-800 min-h-[44px]" />
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">Dura (días)</label>
+              <input type="number" min="1" id="cat-days" required value="${existing ? existing.shelfLifeDays : 7}" class="w-full p-2.5 rounded-xl border border-slate-300 font-bold text-slate-800 min-h-[44px]" />
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold text-emerald-700 uppercase mb-1">Precio ref. (S/)</label>
+              <input type="number" step="0.10" min="0" id="cat-price" placeholder="0.00" value="${existing ? (existing.refPrice || 0) : ''}" class="w-full p-2.5 rounded-xl border border-emerald-300 bg-emerald-50/40 font-bold text-slate-800 min-h-[44px]" />
+            </div>
+          </div>
+          <div class="pt-2 flex gap-2">
+            <button type="button" onclick="closeModal()" class="flex-1 py-3 rounded-xl bg-slate-100 font-bold text-slate-600 min-h-[44px]">Cancelar</button>
+            <button type="submit" class="w-2/3 py-3 rounded-xl bg-emerald-600 text-white font-bold shadow-md min-h-[44px]">Guardar Regla</button>
+          </div>
+        </form>
+      `;
+      openModal();
+    }
+
+    function handleSaveCatalog(e, editId) {
+      e.preventDefault();
+      const name = document.getElementById('cat-name').value.trim();
+      const category = document.getElementById('cat-category').value;
+      const buyUnit = document.getElementById('cat-buy-unit').value.trim();
+      const useUnit = document.getElementById('cat-use-unit').value.trim();
+      const factor = parseFloat(document.getElementById('cat-factor').value) || 1;
+      const shelfLifeDays = parseInt(document.getElementById('cat-days').value) || 7;
+      const refPrice = parseFloat(document.getElementById('cat-price').value) || 0;
+
+      if (editId) {
+        const idx = appState.catalog.findIndex(i => i.id === editId);
+        if (idx !== -1) appState.catalog[idx] = { id: editId, name, category, buyUnit, useUnit, factor, shelfLifeDays, refPrice };
+      } else {
+        appState.catalog.push({ id: 'ing_' + Date.now(), name, category, buyUnit, useUnit, factor, shelfLifeDays, refPrice });
+      }
+      saveState();
+      closeModal();
+      renderCurrentTab();
+      showToast('Regla y precio guardados');
+    }
+
+    function deleteCatalogItem(id) {
+      if (appState.pantry.some(l => l.ingredientId === id && l.remainingUseQty > 0)) {
+        showToast('No puedes borrarlo mientras tengas stock activo', 'warning');
+        return;
+      }
+      appState.catalog = appState.catalog.filter(i => i.id !== id);
+      saveState();
+      renderCurrentTab();
+      showToast('Ingrediente eliminado');
+    }
+
+    /**
+     * ============================================================================
+     * PESTAÑA 4: LISTA DE COMPRAS CON PRESUPUESTO EN SOLES (S/) Y EXTRAS DEL HOGAR
+     * ============================================================================
+     */
+    function calculateWeeklyShoppingBalance() {
+      const today = getTodayStr(0);
+      const endWindow = getTodayStr(6);
+      const requiredTotals = {};
+
+      appState.schedule
+        .filter(s => s.status === 'planned' && s.date >= today && s.date <= endWindow)
+        .forEach(item => {
+          const recipe = getRecipe(item.recipeId);
+          if (!recipe) return;
+          recipe.ingredients.forEach(req => {
+            requiredTotals[req.ingredientId] = (requiredTotals[req.ingredientId] || 0) + req.qty;
+          });
+        });
+
+      const coveredList = [];
+      const missingList = [];
+
+      Object.entries(requiredTotals).forEach(([ingId, neededQty]) => {
+        const ingredient = getIngredient(ingId);
+        if (!ingredient) return;
+
+        const validStockQty = appState.pantry
+          .filter(l => l.ingredientId === ingId && l.remainingUseQty > 0 && l.expiryDate >= today)
+          .reduce((sum, l) => sum + Number(l.remainingUseQty), 0);
+
+        const deficit = Number((neededQty - validStockQty).toFixed(2));
+
+        if (deficit <= 0) {
+          coveredList.push({ ingredient, neededQty, inStockQty: validStockQty });
+        } else {
+          const rawBuyNeeded = deficit / ingredient.factor;
+          const suggestedBuyQty = ingredient.factor === 1
+            ? Math.ceil(rawBuyNeeded)
+            : Math.ceil(rawBuyNeeded * 4) / 4; // Redondea a cuartos (0.25, 0.5, 0.75, 1)
+
+          const estimatedCost = Number((suggestedBuyQty * (ingredient.refPrice || 0)).toFixed(2));
+
+          missingList.push({
+            ingredient,
+            neededQty,
+            inStockQty: validStockQty,
+            deficit,
+            suggestedBuyQty,
+            estimatedCost
+          });
+        }
+      });
+
+      return { coveredList, missingList };
+    }
+
+    function renderShoppingTab(container) {
+      const { coveredList, missingList } = calculateWeeklyShoppingBalance();
+      const extras = appState.extraShoppingItems || [];
+
+      const checkedFoodCount = missingList.filter(i => appState.checkedShoppingItems[i.ingredient.id]).length;
+      const checkedExtrasCount = extras.filter(e => e.checked).length;
+
+      // Cálculo de presupuesto en Soles (S/)
+      const foodTotalBudget = missingList.reduce((sum, i) => sum + i.estimatedCost, 0);
+      const extrasTotalBudget = extras.reduce((sum, e) => sum + (Number(e.estimatedPrice) || 0), 0);
+      const grandTotalBudget = foodTotalBudget + extrasTotalBudget;
+
+      const pendingFoodBudget = missingList
+        .filter(i => !appState.checkedShoppingItems[i.ingredient.id])
+        .reduce((sum, i) => sum + i.estimatedCost, 0);
+      const pendingExtrasBudget = extras
+        .filter(e => !e.checked)
+        .reduce((sum, e) => sum + (Number(e.estimatedPrice) || 0), 0);
+      const pendingTotalBudget = pendingFoodBudget + pendingExtrasBudget;
+
+      container.innerHTML = `
+        <div class="space-y-4 animate-fade-in">
+
+          <!-- TARJETA RESUMEN DE PRESUPUESTO ESTIMADO EN SOLES -->
+          <div class="bg-gradient-to-br from-slate-900 via-slate-800 to-emerald-950 text-white rounded-3xl p-4 shadow-md space-y-2.5">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] font-bold uppercase tracking-wider text-emerald-300 flex items-center gap-1.5">
+                <i class="fa-solid fa-wallet"></i>
+                <span>Presupuesto estimado del mercado</span>
+              </span>
+              ${(missingList.length > 0 || extras.length > 0) ? `
+                <button onclick="copyShoppingListText()" class="px-3 py-1.5 rounded-xl bg-white/15 hover:bg-white/25 text-white text-xs font-bold flex items-center gap-1.5 transition">
+                  <i class="fa-regular fa-copy"></i>
+                  <span>Copiar lista</span>
+                </button>
+              ` : ''}
+            </div>
+
+            <div class="flex items-baseline justify-between gap-2 pt-0.5">
+              <div>
+                <div class="text-2xl font-extrabold tracking-tight text-white">${formatSoles(grandTotalBudget)}</div>
+                <div class="text-[11px] text-slate-300">
+                  Comida: ${formatSoles(foodTotalBudget)} · Extras hogar: ${formatSoles(extrasTotalBudget)}
+                </div>
+              </div>
+              <div class="text-right">
+                <div class="text-[11px] text-amber-300 font-bold">Por pagar aún</div>
+                <div class="text-base font-extrabold text-amber-300">${formatSoles(pendingTotalBudget)}</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 1. INGREDIENTES FALTANTES PARA TUS RECETAS -->
+          <div class="bg-white rounded-3xl p-4 border border-slate-200/80 shadow-2xs space-y-3.5">
+            <div>
+              <h2 class="text-base font-extrabold text-slate-800">Ingredientes del Menú (7 días)</h2>
+              <p class="text-xs text-slate-500">Calculado según tu Calendario menos tu Despensa</p>
+            </div>
+
+            ${missingList.length === 0 ? `
+              <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-5 text-center space-y-1">
+                <i class="fa-solid fa-circle-check text-emerald-500 text-2xl mb-1"></i>
+                <div class="text-sm font-extrabold text-emerald-900">¡Ingredientes de recetas cubiertos!</div>
+                <p class="text-xs text-emerald-700">Tienes todo lo necesario en casa para lo agendado esta semana.</p>
+              </div>
+            ` : `
+              <div class="divide-y divide-slate-100">
+                ${missingList.map(item => {
+                  const isChecked = !!appState.checkedShoppingItems[item.ingredient.id];
+                  return `
+                    <label class="py-3 flex items-center justify-between gap-3 cursor-pointer select-none min-h-[54px]">
+                      <div class="flex items-center gap-3">
+                        <input type="checkbox" ${isChecked ? 'checked' : ''} onchange="appState.checkedShoppingItems['${item.ingredient.id}'] = !appState.checkedShoppingItems['${item.ingredient.id}']; saveState(); renderCurrentTab();" class="w-5 h-5 rounded-md accent-emerald-600 cursor-pointer shrink-0" />
+                        <div class="${isChecked ? 'line-through opacity-50' : ''}">
+                          <div class="text-sm font-bold text-slate-800">${item.ingredient.name}</div>
+                          <div class="text-xs text-slate-500">
+                            Pide ${formatNumber(item.neededQty)} · Tienes ${formatNumber(item.inStockQty)} · <strong class="text-rose-600">Faltan ${formatNumber(item.deficit)} ${item.ingredient.useUnit}</strong>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="text-right shrink-0 ${isChecked ? 'opacity-40' : ''}">
+                        <span class="inline-block px-2.5 py-1 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-xs font-extrabold">
+                          ~${formatNumber(item.suggestedBuyQty)} ${item.ingredient.buyUnit}
+                        </span>
+                        ${item.estimatedCost > 0 ? `<div class="text-[11px] font-extrabold text-emerald-700 mt-0.5">${formatSoles(item.estimatedCost)}</div>` : ''}
+                      </div>
+                    </label>
+                  `;
+                }).join('')}
+              </div>
+
+              <div class="pt-1">
+                <button onclick="moveCheckedToPantry()" class="w-full py-3.5 px-4 rounded-2xl min-h-[46px] ${
+                  checkedFoodCount > 0
+                    ? 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-md shadow-emerald-600/20'
+                    : 'bg-slate-100 text-slate-400 cursor-not-allowed'
+                } text-xs font-extrabold flex items-center justify-center gap-2 transition">
+                  <i class="fa-solid fa-basket-shopping text-sm"></i>
+                  <span>${checkedFoodCount > 0 ? `Ingresar ${checkedFoodCount} comprados a Mi Despensa` : 'Marca alimentos comprados para ingresarlo'}</span>
+                </button>
+              </div>
+            `}
+          </div>
+
+          <!-- 2. EXTRAS Y BÁSICOS DEL HOGAR (COMPRAS DIRECTAS SIN RECETA) -->
+          <div class="bg-white rounded-3xl p-4 border border-slate-200/80 shadow-2xs space-y-3.5">
+            <div class="flex items-center justify-between gap-2">
+              <div>
+                <h3 class="text-base font-extrabold text-slate-800">Extras y Básicos del Hogar</h3>
+                <p class="text-xs text-slate-500">Papel higiénico, detergente, aceite, sal, pan...</p>
+              </div>
+              ${checkedExtrasCount > 0 ? `
+                <button onclick="clearCheckedExtras()" class="px-2.5 py-1.5 rounded-xl bg-rose-50 text-rose-600 text-[11px] font-bold hover:bg-rose-100 transition">
+                  Limpiar tachados (${checkedExtrasCount})
+                </button>
+              ` : ''}
+            </div>
+
+            <!-- Formulario rápido inline para añadir extra sin receta -->
+            <form onsubmit="handleAddExtraItem(event)" class="grid grid-cols-12 gap-2 bg-slate-50 p-2.5 rounded-2xl border border-slate-200/80">
+              <input type="text" id="extra-name" required placeholder="Ej. Detergente, Sal, Pan..." class="col-span-5 p-2.5 rounded-xl border border-slate-200 bg-white text-xs font-semibold text-slate-800 focus:outline-hidden focus:border-emerald-500 min-h-[42px]" />
+              <input type="text" id="extra-qty" placeholder="Cant. (1 un)" class="col-span-3 p-2.5 rounded-xl border border-slate-200 bg-white text-xs font-medium text-slate-700 focus:outline-hidden focus:border-emerald-500 min-h-[42px]" />
+              <input type="number" id="extra-price" step="0.10" min="0" placeholder="S/ 0.00" class="col-span-2 p-2.5 rounded-xl border border-slate-200 bg-white text-xs font-bold text-emerald-700 focus:outline-hidden focus:border-emerald-500 min-h-[42px]" />
+              <button type="submit" class="col-span-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold flex items-center justify-center shadow-2xs min-h-[42px]" title="Agregar extra">
+                <i class="fa-solid fa-plus"></i>
+              </button>
+            </form>
+
+            ${extras.length === 0 ? `
+              <p class="text-xs text-slate-400 text-center py-2">No tienes artículos extra anotados para esta compra.</p>
+            ` : `
+              <div class="divide-y divide-slate-100">
+                ${extras.map(ext => `
+                  <div class="py-2.5 flex items-center justify-between gap-2 min-h-[48px]">
+                    <label class="flex items-center gap-3 cursor-pointer flex-1 select-none">
+                      <input type="checkbox" ${ext.checked ? 'checked' : ''} onchange="toggleExtraItem('${ext.id}')" class="w-5 h-5 rounded-md accent-emerald-600 cursor-pointer shrink-0" />
+                      <div class="${ext.checked ? 'line-through opacity-50' : ''}">
+                        <div class="text-sm font-bold text-slate-800">${ext.name}</div>
+                        ${ext.qtyLabel ? `<div class="text-[11px] text-slate-500">${ext.qtyLabel}</div>` : ''}
+                      </div>
+                    </label>
+                    <div class="flex items-center gap-2 shrink-0">
+                      ${ext.estimatedPrice > 0 ? `<span class="text-xs font-extrabold text-emerald-700 bg-emerald-50 px-2 py-1 rounded-lg ${ext.checked ? 'opacity-40' : ''}">${formatSoles(ext.estimatedPrice)}</span>` : ''}
+                      <button onclick="deleteExtraItem('${ext.id}')" class="text-slate-300 hover:text-rose-500 p-2 transition" title="Eliminar">
+                        <i class="fa-solid fa-trash-can text-xs"></i>
+                      </button>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            `}
+          </div>
+
+          <!-- 3. LO QUE YA TIENES CUBIERTO EN CASA -->
+          ${coveredList.length > 0 ? `
+            <div class="bg-emerald-50/70 rounded-3xl p-4 border border-emerald-200/80 space-y-2.5">
+              <div class="flex items-center gap-2">
+                <i class="fa-solid fa-house-circle-check text-emerald-600"></i>
+                <h3 class="text-sm font-extrabold text-emerald-900">Ya tienes en casa (No comprar)</h3>
+              </div>
+              <div class="space-y-1.5">
+                ${coveredList.map(item => `
+                  <div class="flex items-center justify-between text-xs bg-white/90 px-3 py-2 rounded-xl">
+                    <span class="font-bold text-slate-700">${item.ingredient.name}</span>
+                    <span class="text-emerald-700 font-semibold">
+                      Pide ${formatNumber(item.neededQty)} · Tienes <strong>${formatNumber(item.inStockQty)} ${item.ingredient.useUnit}</strong>
+                    </span>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          ` : ''}
+        </div>
+      `;
+    }
+
+    function handleAddExtraItem(e) {
+      e.preventDefault();
+      const nameInput = document.getElementById('extra-name');
+      const qtyInput = document.getElementById('extra-qty');
+      const priceInput = document.getElementById('extra-price');
+
+      const name = nameInput.value.trim();
+      if (!name) return;
+
+      appState.extraShoppingItems.push({
+        id: 'ext_' + Date.now(),
+        name,
+        qtyLabel: qtyInput.value.trim() || '1 unid.',
+        estimatedPrice: parseFloat(priceInput.value) || 0,
+        checked: false
+      });
+
+      saveState();
+      renderCurrentTab();
+      showToast(`"${name}" agregado a tus compras`);
+    }
+
+    function toggleExtraItem(id) {
+      const item = appState.extraShoppingItems.find(e => e.id === id);
+      if (item) {
+        item.checked = !item.checked;
+        saveState();
+        renderCurrentTab();
+      }
+    }
+
+    function deleteExtraItem(id) {
+      appState.extraShoppingItems = appState.extraShoppingItems.filter(e => e.id !== id);
+      saveState();
+      renderCurrentTab();
+    }
+
+    function clearCheckedExtras() {
+      appState.extraShoppingItems = appState.extraShoppingItems.filter(e => !e.checked);
+      saveState();
+      renderCurrentTab();
+      showToast('Extras comprados limpiados');
+    }
+
+    function moveCheckedToPantry() {
+      const { missingList } = calculateWeeklyShoppingBalance();
+      const toAdd = missingList.filter(i => appState.checkedShoppingItems[i.ingredient.id]);
+      if (toAdd.length === 0) return;
+
+      const today = getTodayStr(0);
+
+      toAdd.forEach(item => {
+        const ing = item.ingredient;
+        const buyQty = item.suggestedBuyQty;
+        const addedUseQty = Number((buyQty * ing.factor).toFixed(2));
+        const expiryDate = addDaysToDateStr(today, ing.shelfLifeDays);
+
+        appState.pantry.push({
+          id: 'lot_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6),
+          ingredientId: ing.id,
+          buyQty,
+          remainingUseQty: addedUseQty,
+          initialUseQty: addedUseQty,
+          purchaseDate: today,
+          expiryDate
+        });
+
+        delete appState.checkedShoppingItems[ing.id];
+      });
+
+      saveState();
+      renderCurrentTab();
+      showToast(`¡${toAdd.length} alimentos ingresados a Mi Despensa!`);
+    }
+
+    function copyShoppingListText() {
+      const { missingList } = calculateWeeklyShoppingBalance();
+      const extras = appState.extraShoppingItems || [];
+      if (missingList.length === 0 && extras.length === 0) return;
+
+      let total = 0;
+      const lines = ['🥦 *Lista de Mercado - BrocoFood*', ''];
+
+      if (missingList.length > 0) {
+        lines.push('*Ingredientes de comidas:*');
+        missingList.forEach(item => {
+          const mark = appState.checkedShoppingItems[item.ingredient.id] ? '✅' : '⬜';
+          const priceStr = item.estimatedCost > 0 ? ` (~${formatSoles(item.estimatedCost)})` : '';
+          total += item.estimatedCost;
+          lines.push(`${mark} ${item.ingredient.name}: ~${formatNumber(item.suggestedBuyQty)} ${item.ingredient.buyUnit}${priceStr}`);
+        });
+        lines.push('');
+      }
+
+      if (extras.length > 0) {
+        lines.push('*Extras del hogar:*');
+        extras.forEach(ext => {
+          const mark = ext.checked ? '✅' : '⬜';
+          const priceStr = ext.estimatedPrice > 0 ? ` (~${formatSoles(ext.estimatedPrice)})` : '';
+          total += Number(ext.estimatedPrice) || 0;
+          lines.push(`${mark} ${ext.name} (${ext.qtyLabel})${priceStr}`);
+        });
+        lines.push('');
+      }
+
+      if (total > 0) {
+        lines.push(`💰 *Presupuesto estimado total:* ${formatSoles(total)}`);
+      }
+
+      const textToCopy = lines.join('\n');
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(textToCopy).then(() => {
+          showToast('Lista y presupuesto copiados');
+        }).catch(() => fallbackCopyText(textToCopy));
+      } else {
+        fallbackCopyText(textToCopy);
+      }
+    }
+
+    function fallbackCopyText(text) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand('copy');
+        showToast('Lista y presupuesto copiados');
+      } catch (e) {
+        showToast('No se pudo copiar automáticamente', 'error');
+      }
+      document.body.removeChild(ta);
+    }
+
+    /**
+     * ============================================================================
+     * RESPALDO JSON (SINCRONIZACIÓN MANUAL ENTRE IPHONE Y TABLET ANDROID)
+     * ============================================================================
+     */
+    function openBackupModal() {
+      const modalBox = document.getElementById('modal-box');
+      modalBox.innerHTML = `
+        <div class="p-5 border-b border-slate-100 flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="text-xl">🥦</span>
+            <h3 class="text-lg font-extrabold text-slate-800">Respaldo BrocoFood</h3>
+          </div>
+          <button onclick="closeModal()" class="w-9 h-9 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="p-5 space-y-4">
+          <p class="text-xs text-slate-500 leading-relaxed">
+            Descarga tu archivo de datos para enviártelo por WhatsApp o Telegram y cargarlo en tu iPhone o tablet Android en segundos.
+          </p>
+          <button onclick="exportDataJSON()" class="w-full py-3.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-sm min-h-[46px]">
+            <i class="fa-solid fa-download"></i>
+            <span>Exportar Copia de Seguridad (.json)</span>
+          </button>
+          <label class="w-full py-3.5 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm flex items-center justify-center gap-2 cursor-pointer transition min-h-[46px]">
+            <i class="fa-solid fa-upload text-emerald-600"></i>
+            <span>Importar Copia desde Archivo (.json)</span>
+            <input type="file" accept=".json" onchange="importDataJSON(event)" class="hidden" />
+          </label>
+          <div class="pt-3 border-t border-slate-100">
+            <button onclick="appState = getDefaultData(); saveState(); closeModal(); renderCurrentTab(); showToast('Datos de ejemplo de BrocoFood restaurados');" class="w-full py-3 px-4 rounded-xl border border-rose-200 text-rose-600 hover:bg-rose-50 font-bold text-xs flex items-center justify-center gap-1.5 transition min-h-[44px]">
+              <i class="fa-solid fa-rotate-left"></i>
+              <span>Restaurar datos de ejemplo iniciales</span>
+            </button>
+          </div>
+        </div>
+      `;
+      openModal();
+    }
+
+    function exportDataJSON() {
+      const blob = new Blob([JSON.stringify(appState, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `BrocoFood_${getTodayStr(0)}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('Copia de BrocoFood descargada');
+    }
+
+    function importDataJSON(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const parsed = JSON.parse(e.target.result);
+          if (parsed && Array.isArray(parsed.catalog) && Array.isArray(parsed.pantry)) {
+            appState = parsed;
+            saveState();
+            closeModal();
+            renderCurrentTab();
+            showToast('Datos importados correctamente');
+          } else {
+            showToast('Archivo inválido', 'error');
+          }
+        } catch (err) {
+          showToast('Error al leer el archivo', 'error');
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function openModal() {
+      document.getElementById('modal-container').classList.remove('hidden');
+    }
+
+    function closeModal() {
+      document.getElementById('modal-container').classList.add('hidden');
+    }
+
+    document.getElementById('modal-container').addEventListener('click', function(e) {
+      if (e.target === this) closeModal();
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+      setupBrocoFoodPWAIcons();
+      renderCurrentTab();
+    });
+  </script>
+</body>
+</html>
